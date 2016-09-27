@@ -17,7 +17,8 @@
         android:layout_marginTop="135dp"
         android:id="@+id/btn_sand"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="goTelaHist"/>
 
     <Button
         android:text="@string/telaInicial_VerToken"
@@ -25,5 +26,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/btn_vetTok"
         android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/btn_sand" />
+        android:layout_alignStart="@+id/btn_sand"
+        android:onClick="goTelaToken"/>
 </RelativeLayout>

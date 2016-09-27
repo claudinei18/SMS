@@ -1,5 +1,23 @@
 <resources>
     <string name="app_name">SMS</string>
+
+    <!--tela inicial-->
     <string name="telaInicial_Sanduiche">Sanduiche</string>
     <string name="telaInicial_VerToken">Ver Token</string>
+
+    <!--tela token-->
+    <string name="telaTok_ok">OK</string>
+    <string name="telaTok_token">Token</string>
+
+    <!--tela Pagamento-->
+    <string name="telaPag_ok">OK</string>
+
+    <!--tela Montar-->
+    <string name="telaMont_ok">OK</string>
+
+    <!--tela hist-->
+    <string name="telaHist_ok">OK</string>
+
+    <!--tela dest-->
+    <string name="telaDest_ok">OK</string>
 </resources>
