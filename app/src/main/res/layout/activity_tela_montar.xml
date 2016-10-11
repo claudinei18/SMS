@@ -23,7 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/btn_ok">
+        android:layout_above="@+id/btn_ok"
+        android:id="@+id/frame_fragment">
 
     </FrameLayout>
 </RelativeLayout>

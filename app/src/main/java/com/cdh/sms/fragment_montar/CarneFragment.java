@@ -37,11 +37,11 @@ public class CarneFragment extends Fragment implements AdapterView.OnItemClickLi
                              Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_carne, container, false);
-
-        ListView listView = (ListView) root.findViewById(R.id.list_view);
-        listView.setOnItemClickListener(this);
-        ArrayAdapter<String> adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, itens);
-        listView.setAdapter(adapter);
+//
+//        ListView listView = (ListView) root.findViewById(R.id.list_view);
+////        listView.setOnItemClickListener(this);
+//        ArrayAdapter<String> adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, itens);
+//        listView.setAdapter(adapter);
 
         return root;
     }
