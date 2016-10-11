@@ -14,10 +14,14 @@
 
     <!--tela Montar-->
     <string name="telaMont_ok">OK</string>
+    <string name="telaMont_Montar">Montar</string>
 
     <!--tela hist-->
     <string name="telaHist_ok">OK</string>
 
     <!--tela dest-->
     <string name="telaDest_ok">OK</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -12,7 +12,6 @@ public class CtrlMontar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_montar);
 
-        // @// TODO: 16/9/27 detalhar a tela montar, fragment, etc...
     }
 
     public void nextD(View view) {
