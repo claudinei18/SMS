@@ -18,4 +18,55 @@
         android:layout_alignParentEnd="true"
         android:id="@+id/btn_ok"
         android:onClick="nextP" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Carro"
+        android:id="@+id/radioButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:checked="false" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A pé"
+        android:id="@+id/radioButton2"
+        android:checked="false"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/radioButton"
+        android:layout_marginStart="49dp" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Transp. Público"
+        android:id="@+id/radioButton3"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:checked="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="MAPA"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/radioButton"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="39dp"
+        android:textSize="100dp"
+        android:layout_alignEnd="@+id/btn_ok" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Tempo de Chegada:"
+        android:textColor="@color/black"
+        android:id="@+id/textView3"
+        android:layout_above="@+id/btn_ok"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>
