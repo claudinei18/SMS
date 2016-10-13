@@ -32,9 +32,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Nome"
+        android:hint="Nome"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/et_Nome"
         android:layout_below="@+id/textView4"
         android:layout_alignParentStart="true" />
 
@@ -43,10 +43,10 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText2"
-        android:layout_below="@+id/editText"
+        android:id="@+id/et_CPF"
+        android:layout_below="@+id/et_Nome"
         android:layout_alignParentStart="true"
-        android:text="CPF" />
+        android:hint="CPF" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Dados do Cartão"
         android:id="@+id/textView5"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/et_CPF"
         android:layout_alignParentStart="true"
         android:layout_marginTop="32dp" />
 
@@ -63,8 +63,8 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText3"
-        android:text="Número"
+        android:id="@+id/et_NumeroCartao"
+        android:hint="Número"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
         android:layout_alignEnd="@+id/btn_ok" />
@@ -74,9 +74,9 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText4"
-        android:text="Cod Seg"
-        android:layout_below="@+id/editText3"
+        android:id="@+id/et_CodSeg"
+        android:hint="Cod Seg"
+        android:layout_below="@+id/et_NumeroCartao"
         android:layout_alignParentStart="true"
         android:layout_alignEnd="@+id/textView5" />
 
@@ -84,21 +84,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Nome Impresso no Cartão"
+        android:hint="Nome Impresso no Cartão"
         android:ems="10"
-        android:id="@+id/editText5"
-        android:layout_above="@+id/editText3"
+        android:id="@+id/et_NomeImpresso"
+        android:layout_above="@+id/et_NumeroCartao"
         android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/editText3" />
+        android:layout_alignEnd="@+id/et_NumeroCartao" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="date"
         android:ems="10"
-        android:id="@+id/editText6"
-        android:text="Data Validade"
-        android:layout_below="@+id/editText4"
+        android:id="@+id/et_DataVal"
+        android:hint="Data Validade"
+        android:layout_below="@+id/et_CodSeg"
         android:layout_alignParentStart="true"
         android:layout_alignEnd="@+id/textView4" />
 
