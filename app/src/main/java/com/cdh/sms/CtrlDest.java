@@ -19,6 +19,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -65,11 +66,6 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
         Location gpsLocation = appLocationService.getLocation(LocationManager.GPS_PROVIDER);
 
         if (gpsLocation != null) {
-            latitude = gpsLocation.getLatitude();
-            longitude = gpsLocation.getLongitude();
-
-            Toast toast = Toast.makeText(CtrlDest.this, "Latitude: " + latitude + "\nLongitude: " + longitude, Toast.LENGTH_SHORT);
-            toast.show();
 
             Cursor cursor = databaseOpenHelper.getLocations();
             LatLng teste = null;
@@ -89,11 +85,24 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
 
                     teste = new LatLng(x, y);
-                    mMap.addMarker(new MarkerOptions().position(teste).title("Loja: " + nome));
+                    mMap.addMarker(new MarkerOptions().position(teste).title("Loja: " + nome).snippet("Esta é uma loja !!!"));
 
                 }while(cursor.moveToNext());
             }
             cursor.close();
+
+            latitude = gpsLocation.getLatitude();
+            longitude = gpsLocation.getLongitude();
+
+            mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng( latitude, longitude))
+                    .title("Voce está aqui !!!")
+                    .snippet("Esta é sua localização !!!")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
+
+            Toast toast = Toast.makeText(CtrlDest.this, "Latitude: " + latitude + "\nLongitude: " + longitude, Toast.LENGTH_SHORT);
+            toast.show();
+
 
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(teste, 17));
 

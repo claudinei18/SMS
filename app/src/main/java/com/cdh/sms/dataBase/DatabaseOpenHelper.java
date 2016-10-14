@@ -25,6 +25,34 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     final static String[] columnsPedido = { _ID, NOME, NUMERO , TOKEN };
 
 
+    /*=============================================================================*/
+    /*CARNE*/
+    final static String TABLE_NAME_Carne= "carne";
+    final static String NOME_CARNE = "nome";
+    final static String CALORIAS_CARNE = "calorias";
+    final static String[] columnsCarne= { _ID, NOME_CARNE, CALORIAS_CARNE };
+    final private static String CREATE_TABLE_CARNE =
+
+            "CREATE TABLE carne (" + _ID
+                    + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + NOME_CARNE + " TEXT NOT NULL,"
+                    + CALORIAS_CARNE + " TEXT NOT NULL)";
+    final private static String INSERT_CARNE1 = "INSERT INTO carne ("
+            + NOME_CARNE + ", "
+            + CALORIAS_CARNE + ") " +
+            "VALUES ('carne_1', '230');";
+    final private static String INSERT_CARNE2 = "INSERT INTO carne ("
+            + NOME_CARNE + ", "
+            + CALORIAS_CARNE + ") " +
+            "VALUES ('carne_2', '22230');";
+    final private static String INSERT_CARNE3 = "INSERT INTO carne ("
+            + NOME_CARNE + ", "
+            + CALORIAS_CARNE + ") " +
+            "VALUES ('carne_3', '230333');";
+
+    /*=============================================================================*/
+
+
     /*Create table LOCATIONS*/
     final private static String CREATE_CMD =
 
@@ -48,7 +76,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             + NOME + ", "
             + LATITUDE + ", "
             + LONGITUDE + ") " +
-            "VALUES ('minha_casa', -19.895171, -44.026986);";
+            "VALUES ('casa_tia_lena', -19.895171, -44.026986);";
 
     final private static String INSERT2 = "INSERT INTO locations ("
             + NOME + ", "
@@ -61,6 +89,13 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             + LATITUDE + ", "
             + LONGITUDE + ") " +
             "VALUES ('Mineirão', -19.866020, -43.971040);";
+
+    final private static String INSERT4 = "INSERT INTO locations ("
+            + NOME + ", "
+            + LATITUDE + ", "
+            + LONGITUDE + ") " +
+            "VALUES ('Casa tia Lena', -19.797104, -43.970881);";
+
 
     final private static String NAME = "locations_db";
     final private static Integer VERSION = 1;
@@ -75,9 +110,14 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_CMD);
         db.execSQL(CREATE_CMD2);
+        db.execSQL(CREATE_TABLE_CARNE);
+        db.execSQL(INSERT_CARNE1);
+        db.execSQL(INSERT_CARNE2);
+        db.execSQL(INSERT_CARNE3);
         db.execSQL(INSERT);
         db.execSQL(INSERT2);
         db.execSQL(INSERT3);
+        db.execSQL(INSERT4);
         System.out.println("Criou");
     }
 
@@ -94,6 +134,12 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     public Cursor getLocations() {
         return this.getWritableDatabase().query(DatabaseOpenHelper.TABLE_NAME_Locations,
                 DatabaseOpenHelper.columnsLocation, null, new String[] {}, null, null,
+                null);
+    }
+
+    public Cursor getCarnes() {
+        return this.getWritableDatabase().query(DatabaseOpenHelper.TABLE_NAME_Carne,
+                DatabaseOpenHelper.columnsCarne, null, new String[] {}, null, null,
                 null);
     }
 }

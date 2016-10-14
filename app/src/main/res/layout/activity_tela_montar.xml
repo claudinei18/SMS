@@ -26,5 +26,47 @@
         android:layout_above="@+id/btn_ok"
         android:id="@+id/frame_fragment">
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="1">
+
+            <TextView
+                android:text="Carnes"
+                android:layout_width="81dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:id="@+id/textView2" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="69dp"
+                android:layout_weight="0.65"
+                android:id="@+id/rg_Carnes"/>
+
+            <TextView
+                android:text="Saladas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:id="@+id/textView6" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="69dp"
+                android:layout_weight="0.65" />
+
+            <TextView
+                android:text="Molhos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:id="@+id/textView7" />
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="69dp"
+                android:layout_weight="0.65" />
+        </LinearLayout>
     </FrameLayout>
 </RelativeLayout>
