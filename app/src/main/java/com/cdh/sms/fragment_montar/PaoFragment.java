@@ -1,24 +1,28 @@
-package com.cdh.sms;
+package com.cdh.sms.fragment_montar;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.cdh.sms.R;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemClickListener{
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class PaoFragment extends Fragment implements AdapterView.OnItemClickListener{
+    ArrayList<String> itens;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tela_hist);
-
-        ArrayList<String> itens = new ArrayList<>();
+    public PaoFragment() {
+        // Required empty public constructor
+        itens = new ArrayList<>();
         itens.add("Sanduiche1");
         itens.add("Sanduiche2");
         itens.add("Sanduiche3");
@@ -39,20 +43,25 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
         itens.add("Sanduiche8");
         itens.add("Sanduiche9");
         itens.add("Sanduiche10");
-
-        ListView listView = (ListView) findViewById(R.id.list_view);
-        listView.setOnItemClickListener(this);
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, itens);
-        listView.setAdapter(adapter);
-
     }
 
-    public void nextDe(View view) {
-        startActivity(new Intent(this, CtrlMontar.class));
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View root = inflater.inflate(R.layout.fragment_pao, container, false);
+
+        ListView listView = (ListView) root.findViewById(R.id.list_view);
+        listView.setOnItemClickListener(this);
+        ArrayAdapter<String> adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, itens);
+        listView.setAdapter(adapter);
+
+        return root;
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startActivity(new Intent(this, CtrlDest.class));
+
     }
 }
