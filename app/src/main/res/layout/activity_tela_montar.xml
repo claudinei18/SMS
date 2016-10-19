@@ -11,62 +11,78 @@
     tools:context="com.cdh.sms.CtrlMontar">
 
     <Button
-        android:text="@string/telaMont_ok"
+        android:id="@+id/btn_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/btn_ok"
-        android:onClick="nextD"/>
+        android:onClick="nextD"
+        android:text="@string/telaMont_ok" />
 
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
         android:layout_above="@+id/btn_ok"
-        android:id="@+id/frame_fragment">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:weightSum="1">
 
             <TextView
-                android:text="Carnes"
+                android:id="@+id/tvCarnes"
                 android:layout_width="81dp"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:id="@+id/textView2" />
+                android:text="Carnes"
+                android:textSize="20sp" />
 
             <RadioGroup
+                android:id="@+id/rg_Carnes"
                 android:layout_width="match_parent"
-                android:layout_height="69dp"
-                android:layout_weight="0.65"
-                android:id="@+id/rg_Carnes"/>
+                android:layout_height="200dp" />
 
             <TextView
+                android:id="@+id/tvSaladas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Saladas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:id="@+id/textView6" />
+                android:textSize="20sp" />
 
-            <ListView
+            <RadioGroup
+                android:id="@+id/rg_Saladas"
                 android:layout_width="match_parent"
-                android:layout_height="69dp"
-                android:layout_weight="0.65" />
+                android:layout_height="200dp" />
 
             <TextView
-                android:text="Molhos"
+                android:id="@+id/tvMolhos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:id="@+id/textView7" />
-            <ListView
+                android:text="Molhos"
+                android:textSize="20sp" />
+
+            <RadioGroup
+                android:id="@+id/rg_Molhos"
                 android:layout_width="match_parent"
-                android:layout_height="69dp"
-                android:layout_weight="0.65" />
+                android:layout_height="200dp" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Condimentos"
+                android:textSize="20sp" />
+
+            <RadioGroup
+                android:id="@+id/rg_Condimentos"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_weight="5.89" />
+
+
         </LinearLayout>
-    </FrameLayout>
+    </ScrollView>
+
 </RelativeLayout>

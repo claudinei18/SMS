@@ -33,18 +33,14 @@ public class CtrlMontar extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_montar);
-        Fragment fragment = new CarneFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.frame_fragment, fragment);
-        transaction.commit();
 
         databaseOpenHelper = new DatabaseOpenHelper(this);
-//        populateRadioGroup();
-        teste();
+
+        populateRadioGroup("Carne");
+        populateRadioGroup("Salada");
     }
 
-    public void populateRadioGroup(){
+    public void populateCarnes(){
 
         RadioGroup rg = new RadioGroup(this);
         rg.setOrientation(LinearLayout.VERTICAL);
@@ -84,6 +80,54 @@ public class CtrlMontar extends AppCompatActivity {
 
         ((ViewGroup)findViewById(R.id.rg_Carnes)).addView(rg);
 
+    }
+
+    public void populateRadioGroup(String column){
+
+        RadioGroup rg = new RadioGroup(this);
+        rg.setOrientation(LinearLayout.VERTICAL);
+
+        Cursor cursor = null;
+        if(column.equals("Carne")){
+            cursor = databaseOpenHelper.getCarnes();
+        }else if(column.equals("Salada")){
+            cursor = databaseOpenHelper.getSaladas();
+        }
+
+        if (cursor.moveToFirst()){
+            do{
+                String id = cursor.getString(cursor.getColumnIndex("_id"));
+                String nome = cursor.getString(cursor.getColumnIndex("nome"));
+                String calorias = cursor.getString(cursor.getColumnIndex("calorias"));
+
+                System.out.println("Nome: " + nome);
+
+                double x = Double.parseDouble(calorias);
+                int int_id = Integer.parseInt(id);
+
+
+                final RadioButton rdbtn = new RadioButton(this);
+                rdbtn.setId(int_id);
+                rdbtn.setText(nome + " " + calorias + " cal");
+                rdbtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast toast = Toast.makeText(CtrlMontar.this, rdbtn.getText() + " selecionado!", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                });
+                rg.addView(rdbtn);
+
+
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+
+        if(column.equals("Carne")){
+            ((ViewGroup)findViewById(R.id.rg_Carnes)).addView(rg);
+        }else if(column.equals("Salada")){
+            ((ViewGroup)findViewById(R.id.rg_Saladas)).addView(rg);
+        }
     }
 
     public void teste(){
