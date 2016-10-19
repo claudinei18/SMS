@@ -38,7 +38,8 @@ public class CtrlMontar extends AppCompatActivity {
 
         populateRadioGroup("Carne");
         populateRadioGroup("Salada");
-    }
+        populateRadioGroup("Molhos");
+        populateRadioGroup("Condimentos");    }
 
     public void populateCarnes(){
 
@@ -92,6 +93,10 @@ public class CtrlMontar extends AppCompatActivity {
             cursor = databaseOpenHelper.getCarnes();
         }else if(column.equals("Salada")){
             cursor = databaseOpenHelper.getSaladas();
+        }else if(column.equals("Molhos")) {
+            cursor = databaseOpenHelper.getMolhos();
+        }else if(column.equals("Condimentos")){
+            cursor = databaseOpenHelper.getCondimentos();
         }
 
         if (cursor.moveToFirst()){
@@ -127,6 +132,10 @@ public class CtrlMontar extends AppCompatActivity {
             ((ViewGroup)findViewById(R.id.rg_Carnes)).addView(rg);
         }else if(column.equals("Salada")){
             ((ViewGroup)findViewById(R.id.rg_Saladas)).addView(rg);
+        }else if(column.equals("Molhos")){
+            ((ViewGroup)findViewById(R.id.rg_Molhos)).addView(rg);
+        }else if(column.equals("Condimentos")){
+            ((ViewGroup)findViewById(R.id.rg_Condimentos)).addView(rg);
         }
     }
 

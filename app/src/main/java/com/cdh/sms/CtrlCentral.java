@@ -82,7 +82,7 @@ public class CtrlCentral extends AppCompatActivity {
     }
 
     public void goTelaToken(View view) {
-        startActivity(new Intent(this, CtrlTok.class));
+        startActivity(new Intent(this, CtrlRecupToken.class));
     }
 
     public void goTelaHist(View view) {

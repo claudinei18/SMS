@@ -263,6 +263,23 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             "VALUES ('Casa tia Lena', -19.797104, -43.970881);";
     /*=============================================================================*/
 
+    /*=============================================================================*/
+    final static String[] columnToken = { _ID, TOKEN };
+    /*Create table TOKEN*/
+    final private static String CREATE_TABLE_TOKEN =
+
+            "CREATE TABLE token (" + _ID
+                    + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + TOKEN + " TEXT NOT NULL)";
+
+    final private static String INSERT_TOKEN1 = "INSERT INTO token ("
+            + TOKEN + ") " +
+            "VALUES ('TesteASAS2015');";
+
+    /*=============================================================================*/
+
+
+
 
     /*Create table PEDIDO*/
     final private static String CREATE_CMD2 =
@@ -341,6 +358,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         db.execSQL(INSERT_LOCATION3);
         db.execSQL(INSERT_LOCATION4);
 
+        /*TOKEN*/
+        db.execSQL(CREATE_TABLE_TOKEN);
+        db.execSQL(INSERT_TOKEN1);
 
         System.out.println("Criou");
     }
@@ -371,5 +391,30 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         return this.getWritableDatabase().query(DatabaseOpenHelper.TABLE_NAME_SALADA,
                 DatabaseOpenHelper.columnsCarne, null, new String[] {}, null, null,
                 null);
+    }
+
+    public Cursor getMolhos() {
+        return this.getWritableDatabase().query(DatabaseOpenHelper.TABLE_NAME_MOLHO,
+                DatabaseOpenHelper.columnsCarne, null, new String[] {}, null, null,
+                null);
+    }
+
+    public Cursor getCondimentos() {
+        return this.getWritableDatabase().query(DatabaseOpenHelper.TABLE_NAME_CONDIMENTOS,
+                DatabaseOpenHelper.columnsCarne, null, new String[] {}, null, null,
+                null);
+    }
+
+    public Cursor getToken() {
+        return this.getWritableDatabase().query(DatabaseOpenHelper.TOKEN,
+                DatabaseOpenHelper.columnToken, null, new String[] {}, null, null,
+                null);
+    }
+
+    public void insertToken(String token){
+        String INSERT_TOKEN = "INSERT INTO token ("
+                + TOKEN + ") " +
+                "VALUES ('" + token + "');";
+        this.getWritableDatabase().execSQL(INSERT_TOKEN);
     }
 }
