@@ -47,6 +47,8 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
     AppLocationService appLocationService;
     double latitude, longitude;
 
+    LatLng atual = null;
+
     private GoogleMap mMap;
 
     @Override
@@ -80,6 +82,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
             Cursor cursor = databaseOpenHelper.getLocations();
             LatLng teste = null;
+            atual = new LatLng(gpsLocation.getLatitude(), gpsLocation.getLongitude());
 
             if (cursor.moveToFirst()){
                 do{
@@ -97,6 +100,13 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
                     teste = new LatLng(x, y);
                     mMap.addMarker(new MarkerOptions().position(teste).title("Loja: " + nome).snippet("Esta é uma loja !!!"));
+                    mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                        @Override
+                        public boolean onMarkerClick(Marker marker) {
+                            setTimePercurse(marker.getPosition());
+                            return false;
+                        }
+                    });
 
                 }while(cursor.moveToNext());
             }
@@ -120,15 +130,34 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
         }
 
-        setTimePercurse();
+//        setTimePercurse();
 
     }
 
-    public void setTimePercurse(){
+    public void setTimePercurse(LatLng loja){
+
+        String enderecoAtual = "";
+        String enderecoLoja = "";
+        Geocoder geocoderAtual, geocoderLoja;
+
+            try {
+                geocoderAtual = new Geocoder(this, Locale.getDefault());
+                geocoderLoja = new Geocoder(this, Locale.getDefault());
+                enderecoAtual = geocoderAtual.getFromLocation(atual.latitude, atual.longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                endereco = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                String city = addresses.get(0).getLocality();
+                String state = addresses.get(0).getAdminArea();
+                String country = addresses.get(0).getCountryName();
+                String postalCode = addresses.get(0).getPostalCode();
+                String knownName = addresses.get(0).getFeatureName();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Victoria+BC&mode=bicycling&language=fr-FR&key=" + R.string.distance_matrix_api_key;
+        String url ="https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Victoria+BC&mode=bicycling&language=fr-FR&key=AIzaSyCFkDm18czij6N4A8Z3bFbNmul-EU_yJvA";
 
         // POST parameters
         Map<String, String> params = new HashMap<String, String>();
@@ -144,6 +173,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                     public void onResponse(JSONObject response)
                     {
                         Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+                        System.out.println("ERRO: " + response.toString());
                     }
                 },
                 new Response.ErrorListener()
@@ -152,6 +182,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                     public void onErrorResponse(VolleyError error)
                     {
                         Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                        System.out.println("ERRO: " + error.toString());
                     }
                 });
 
