@@ -26,4 +26,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_ctrl_recup_token">CtrlRecupToken</string>
+
+    <string name="distance_matrix_api_key">AIzaSyCFkDm18czij6N4A8Z3bFbNmul-EU_yJvA</string>
+
 </resources>

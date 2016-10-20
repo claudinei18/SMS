@@ -13,7 +13,14 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.cdh.sms.dataBase.DatabaseOpenHelper;
+import com.cdh.sms.httpRequest.CustomRequest;
 import com.cdh.sms.location.AppLocationService;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,10 +31,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 
 public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
@@ -108,6 +119,44 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
 
         }
+
+        setTimePercurse();
+
+    }
+
+    public void setTimePercurse(){
+
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Victoria+BC&mode=bicycling&language=fr-FR&key=" + R.string.distance_matrix_api_key;
+
+        // POST parameters
+        Map<String, String> params = new HashMap<String, String>();
+//        params.put("tag", "test");
+
+        JSONObject jsonObj = new JSONObject(params);
+
+        // Request a json response from the provided URL
+        JsonObjectRequest jsonObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, jsonObj, new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response)
+                    {
+                        Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        // Add the request to the RequestQueue.
+        queue.add(jsonObjRequest);
 
     }
 
