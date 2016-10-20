@@ -9,8 +9,10 @@ import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -31,6 +33,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -138,18 +141,32 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
         String enderecoAtual = "";
         String enderecoLoja = "";
+        String cidadeAtual = "";
+        String cidadeLoja = "";
         Geocoder geocoderAtual, geocoderLoja;
+        List<Address> address = new ArrayList<Address>();
 
             try {
                 geocoderAtual = new Geocoder(this, Locale.getDefault());
                 geocoderLoja = new Geocoder(this, Locale.getDefault());
-                enderecoAtual = geocoderAtual.getFromLocation(atual.latitude, atual.longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-                endereco = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                String city = addresses.get(0).getLocality();
-                String state = addresses.get(0).getAdminArea();
-                String country = addresses.get(0).getCountryName();
-                String postalCode = addresses.get(0).getPostalCode();
-                String knownName = addresses.get(0).getFeatureName();
+                address.add(geocoderAtual.getFromLocation(atual.latitude, atual.longitude, 1).get(0));
+                address.add(geocoderLoja.getFromLocation(loja.latitude, loja.longitude, 1).get(0));
+                enderecoAtual = address.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                enderecoLoja = address.get(1).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+
+
+
+                cidadeAtual = address.get(0).getLocality(); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                cidadeLoja = address.get(1).getLocality(); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+
+                System.out.println("Atual: " + enderecoAtual + " " + cidadeAtual);
+                System.out.println("Atual: " + enderecoLoja + " " + cidadeLoja);
+
+//                String city = addresses.get(0).getLocality();
+//                String state = addresses.get(0).getAdminArea();
+//                String country = addresses.get(0).getCountryName();
+//                String postalCode = addresses.get(0).getPostalCode();
+//                String knownName = addresses.get(0).getFeatureName();
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -157,13 +174,20 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Victoria+BC&mode=bicycling&language=fr-FR&key=AIzaSyCFkDm18czij6N4A8Z3bFbNmul-EU_yJvA";
+//        String url ="https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Victoria+BC&mode=bicycling&language=fr-FR&key=AIzaSyCFkDm18czij6N4A8Z3bFbNmul-EU_yJvA";
+
+        String url ="https://maps.googleapis.com/maps/api/distancematrix/json?origins="+ enderecoAtual.replaceAll(" ", "+") + "|" + cidadeAtual.replaceAll(" ", "+") + "|" +
+                "&destinations=" + enderecoLoja.replaceAll(" ", "+") + "|" + cidadeLoja.replaceAll(" ", "+") + "&mode=bicycling&language=fr-FR&key=AIzaSyCFkDm18czij6N4A8Z3bFbNmul-EU_yJvA";
+
 
         // POST parameters
         Map<String, String> params = new HashMap<String, String>();
 //        params.put("tag", "test");
 
         JSONObject jsonObj = new JSONObject(params);
+
+        final TextView tvTempo = (TextView)findViewById(R.id.tvTempo);
+        final String[] tempo = new String[1];
 
         // Request a json response from the provided URL
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest
@@ -172,7 +196,15 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                     @Override
                     public void onResponse(JSONObject response)
                     {
-                        Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+                        try {
+                            tempo[0] = response.getJSONArray("rows").getJSONObject(0).getJSONArray("elements").getJSONObject(0).getJSONObject("duration").getString("text");
+                            System.out.println("Tempo: " + tempo[0]);
+                            tvTempo.setText(tempo[0]);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        Toast.makeText(getApplicationContext(), tempo[0], Toast.LENGTH_SHORT).show();
                         System.out.println("ERRO: " + response.toString());
                     }
                 },

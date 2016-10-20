@@ -82,4 +82,13 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_ok"
+        android:id="@+id/tvTempo"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/textView3" />
+
 </RelativeLayout>
