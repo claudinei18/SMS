@@ -50,7 +50,8 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
     AppLocationService appLocationService;
     double latitude, longitude;
 
-    LatLng atual = null;
+    private LatLng atual = null;
+    private String meioDeLocomocao = "driving";
 
     private GoogleMap mMap;
 
@@ -176,8 +177,11 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
         RequestQueue queue = Volley.newRequestQueue(this);
 //        String url ="https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Victoria+BC&mode=bicycling&language=fr-FR&key=AIzaSyCFkDm18czij6N4A8Z3bFbNmul-EU_yJvA";
 
-        String url ="https://maps.googleapis.com/maps/api/distancematrix/json?origins="+ enderecoAtual.replaceAll(" ", "+") + "|" + cidadeAtual.replaceAll(" ", "+") + "|" +
-                "&destinations=" + enderecoLoja.replaceAll(" ", "+") + "|" + cidadeLoja.replaceAll(" ", "+") + "&mode=bicycling&language=fr-FR&key=AIzaSyCFkDm18czij6N4A8Z3bFbNmul-EU_yJvA";
+//        String url ="https://maps.googleapis.com/maps/api/distancematrix/json?origins="+ enderecoAtual.replaceAll(" ", "+") + "|" + cidadeAtual.replaceAll(" ", "+") + "|" +
+//                "&destinations=" + enderecoLoja.replaceAll(" ", "+") + "|" + cidadeLoja.replaceAll(" ", "+") + "&mode=bicycling&language=pt-BR&key=AIzaSyCFkDm18czij6N4A8Z3bFbNmul-EU_yJvA";
+
+        String url ="https://maps.googleapis.com/maps/api/distancematrix/json?origins="+ atual.latitude + "," + atual.longitude+ "|" +
+                "&destinations=" + loja.latitude + "," + loja.longitude + "&mode=" + meioDeLocomocao + "bicycling&language=pt-BR&key=AIzaSyCFkDm18czij6N4A8Z3bFbNmul-EU_yJvA";
 
 
         // POST parameters
@@ -223,28 +227,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
     }
 
-    public String getAddress(){
-        Geocoder geocoder;
-        List<Address> addresses;
 
-        String endereco = "";
-
-//            try {
-//                geocoder = new Geocoder(this, Locale.getDefault());
-//                addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-//                endereco = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-//                String city = addresses.get(0).getLocality();
-//                String state = addresses.get(0).getAdminArea();
-//                String country = addresses.get(0).getCountryName();
-//                String postalCode = addresses.get(0).getPostalCode();
-//                String knownName = addresses.get(0).getFeatureName();
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
-        return endereco;
-    }
 
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
@@ -257,18 +240,21 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                 if (checked) {
                     Toast toast = Toast.makeText(CtrlDest.this, "Você irá até o local à pé!", Toast.LENGTH_SHORT);
                     toast.show();
+                    meioDeLocomocao = "walking";
                 }
                     break;
             case R.id.rb_Carro:
                 if (checked) {
                     Toast toast = Toast.makeText(CtrlDest.this, "Você irá até o local dirigindo!", Toast.LENGTH_SHORT);
                     toast.show();
+                    meioDeLocomocao = "driving";
                 }
                     break;
             case R.id.rb_TransPub:
                 if (checked) {
                     Toast toast = Toast.makeText(CtrlDest.this, "Você irá até o local por Transporte Público!", Toast.LENGTH_SHORT);
                     toast.show();
+                    meioDeLocomocao = "transit";
                 }
                     break;
         }
