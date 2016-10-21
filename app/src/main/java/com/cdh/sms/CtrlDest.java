@@ -194,22 +194,24 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                 if (checked) {
                     Toast toast = Toast.makeText(CtrlDest.this, "Você irá até o local à pé!", Toast.LENGTH_SHORT);
                     toast.show();
+                    meioDeLocomocao = "walking";
                 }
-                    break;
+                break;
             case R.id.rb_Carro:
                 if (checked) {
                     Toast toast = Toast.makeText(CtrlDest.this, "Você irá até o local dirigindo!", Toast.LENGTH_SHORT);
                     toast.show();
+                    meioDeLocomocao = "driving";
                 }
-                    break;
+                break;
             case R.id.rb_TransPub:
                 if (checked) {
                     Toast toast = Toast.makeText(CtrlDest.this, "Você irá até o local por Transporte Público!", Toast.LENGTH_SHORT);
                     toast.show();
+                    meioDeLocomocao = "transit";
                 }
-                    break;
+                break;
         }
-    }
 
     public void nextP(View view) {
         startActivity(new Intent(this, CtrlPag.class));
