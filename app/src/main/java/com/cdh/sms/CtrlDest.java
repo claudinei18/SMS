@@ -107,6 +107,8 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                     mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
                         public boolean onMarkerClick(Marker marker) {
+                            TextView tvLoja = (TextView)findViewById(R.id.tvLoja);
+                            tvLoja.setText(marker.getTitle());
                             setTimePercurse(marker.getPosition());
                             return false;
                         }
