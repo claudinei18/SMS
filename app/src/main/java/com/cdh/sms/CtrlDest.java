@@ -48,7 +48,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
     private DatabaseOpenHelper databaseOpenHelper;
     AppLocationService appLocationService;
-    double latitude, longitude;
+    double latitudeLoja = 0, longitudeLoja = 0;
 
     private LatLng atual = null;
     private String meioDeLocomocao = "driving";
@@ -116,16 +116,16 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
             }
             cursor.close();
 
-            latitude = gpsLocation.getLatitude();
-            longitude = gpsLocation.getLongitude();
+            atual = new LatLng(gpsLocation.getLatitude(), gpsLocation.getLongitude());
+
 
             mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng( latitude, longitude))
+                    .position(atual)
                     .title("Voce está aqui !!!")
                     .snippet("Esta é sua localização !!!")
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
 
-            Toast toast = Toast.makeText(CtrlDest.this, "Latitude: " + latitude + "\nLongitude: " + longitude, Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(CtrlDest.this, "Latitude: " + atual.latitude + "\nLongitude: " + atual.longitude, Toast.LENGTH_SHORT);
             toast.show();
 
 
@@ -241,6 +241,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                     Toast toast = Toast.makeText(CtrlDest.this, "Você irá até o local à pé!", Toast.LENGTH_SHORT);
                     toast.show();
                     meioDeLocomocao = "walking";
+                    setTimePercurse(new LatLng(latitudeLoja, longitudeLoja));
                 }
                 break;
             case R.id.rb_Carro:
