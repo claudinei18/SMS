@@ -92,7 +92,7 @@
     </RelativeLayout>
 
     <TextView
-        android:text="TextView"
+        android:text="--> Selecione uma Loja <--"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/rl_map"
@@ -101,13 +101,12 @@
         android:layout_toEndOf="@+id/tvLoja" />
 
     <TextView
-        android:text="TextView"
+        android:text="--> Selecione uma Loja <--"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn_ok"
-        android:id="@+id/textView7"
+        android:id="@+id/tvTempo"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/textView3" />
-
 
 </RelativeLayout>
