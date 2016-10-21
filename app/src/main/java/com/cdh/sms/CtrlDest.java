@@ -235,7 +235,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
 
         // Check which radio button was clicked
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.rb_APe:
                 if (checked) {
                     Toast toast = Toast.makeText(CtrlDest.this, "Você irá até o local à pé!", Toast.LENGTH_SHORT);
@@ -258,6 +258,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                 }
                 break;
         }
+    }
 
     public void nextP(View view) {
         startActivity(new Intent(this, CtrlPag.class));
