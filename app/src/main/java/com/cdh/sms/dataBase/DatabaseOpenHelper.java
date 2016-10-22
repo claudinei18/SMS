@@ -411,6 +411,12 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 null);
     }
 
+    public Cursor getPaes() {
+        return this.getWritableDatabase().query(DatabaseOpenHelper.TABLE_NAME_PAO,
+                DatabaseOpenHelper.columnsPAO, null, new String[] {}, null, null,
+                null);
+    }
+
     public void insertToken(String token){
         String INSERT_TOKEN = "INSERT INTO token ("
                 + TOKEN + ") " +
