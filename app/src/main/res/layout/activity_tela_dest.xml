@@ -60,16 +60,6 @@
 
     </RadioGroup>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Tempo de Chegada:"
-        android:textColor="@color/black"
-        android:id="@+id/textView3"
-        android:layout_above="@+id/btn_ok"
-        android:layout_alignParentStart="true" />
-
 
     <TextView
         android:layout_width="wrap_content"
@@ -77,9 +67,21 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Loja Selecionada:"
         android:textColor="@color/black"
-        android:id="@+id/tvLoja"
         android:layout_below="@+id/radioGroup"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Selecione uma Loja"
+        android:textColor="@color/black"
+        android:id="@+id/tvLoja"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/textView2" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -92,21 +94,25 @@
     </RelativeLayout>
 
     <TextView
-        android:text="--> Selecione uma Loja <--"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/rl_map"
-        android:id="@+id/textView2"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/tvLoja" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Tempo de Chegada:"
+        android:textColor="@color/black"
+        android:id="@+id/textView3"
+        android:layout_above="@+id/btn_ok"
+        android:layout_alignParentStart="true" />
 
     <TextView
-        android:text="--> Selecione uma Loja <--"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btn_ok"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Selecione uma Loja"
+        android:textColor="@color/black"
         android:id="@+id/tvTempo"
+        android:layout_above="@+id/btn_ok"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/textView3" />
+
 
 </RelativeLayout>

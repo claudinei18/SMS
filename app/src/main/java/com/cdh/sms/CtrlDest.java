@@ -109,14 +109,20 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                         public boolean onMarkerClick(Marker marker) {
                             TextView tvLoja = (TextView)findViewById(R.id.tvLoja);
                             tvLoja.setText(marker.getTitle());
+                            latitudeLoja = marker.getPosition().latitude;
+                            longitudeLoja = marker.getPosition().longitude;
                             setTimePercurse(marker.getPosition());
+                            marker.setTitle(getAddress(marker.getPosition()));
                             return false;
                         }
                     });
 
-                }while(cursor.moveToNext());
-            }
-            cursor.close();
+        }while(cursor.moveToNext());
+    }
+    cursor.close();
+
+            RadioButton rbCar = (RadioButton)findViewById(R.id.rb_Carro);
+            rbCar.setChecked(true);
 
             atual = new LatLng(gpsLocation.getLatitude(), gpsLocation.getLongitude());
 
@@ -131,13 +137,32 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
             toast.show();
 
 
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(teste, 17));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(atual, 17));
 
 
         }
 
 //        setTimePercurse();
 
+    }
+
+    public String getAddress(LatLng markerPosition){
+        String enderecoMarker = "";
+        Geocoder geocoderMarker;
+        List<Address> address = new ArrayList<Address>();
+
+            try {
+                geocoderMarker = new Geocoder(this, Locale.getDefault());
+                address.add(geocoderMarker.getFromLocation(markerPosition.latitude, markerPosition.longitude, 1).get(0));
+
+                enderecoMarker = address.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+
+                return enderecoMarker;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        return "";
     }
 
     public void setTimePercurse(LatLng loja){
