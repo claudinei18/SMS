@@ -9,8 +9,10 @@ import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -31,6 +33,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -45,7 +48,10 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
     private DatabaseOpenHelper databaseOpenHelper;
     AppLocationService appLocationService;
-    double latitude, longitude;
+    double latitudeLoja = 0, longitudeLoja = 0;
+
+    private LatLng atual = null;
+    private String meioDeLocomocao = "driving";
 
     private GoogleMap mMap;
 
@@ -80,6 +86,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
             Cursor cursor = databaseOpenHelper.getLocations();
             LatLng teste = null;
+            atual = new LatLng(gpsLocation.getLatitude(), gpsLocation.getLongitude());
 
             if (cursor.moveToFirst()){
                 do{
@@ -97,44 +104,85 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
                     teste = new LatLng(x, y);
                     mMap.addMarker(new MarkerOptions().position(teste).title("Loja: " + nome).snippet("Esta é uma loja !!!"));
+                    mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                        @Override
+                        public boolean onMarkerClick(Marker marker) {
+                            TextView tvLoja = (TextView)findViewById(R.id.tvLoja);
+                            tvLoja.setText(marker.getTitle());
+                            latitudeLoja = marker.getPosition().latitude;
+                            longitudeLoja = marker.getPosition().longitude;
+                            setTimePercurse(marker.getPosition());
+                            marker.setTitle(getAddress(marker.getPosition()));
+                            return false;
+                        }
+                    });
 
-                }while(cursor.moveToNext());
-            }
-            cursor.close();
+        }while(cursor.moveToNext());
+    }
+    cursor.close();
 
-            latitude = gpsLocation.getLatitude();
-            longitude = gpsLocation.getLongitude();
+            RadioButton rbCar = (RadioButton)findViewById(R.id.rb_Carro);
+            rbCar.setChecked(true);
+
+            atual = new LatLng(gpsLocation.getLatitude(), gpsLocation.getLongitude());
+
 
             mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng( latitude, longitude))
+                    .position(atual)
                     .title("Voce está aqui !!!")
                     .snippet("Esta é sua localização !!!")
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
 
-            Toast toast = Toast.makeText(CtrlDest.this, "Latitude: " + latitude + "\nLongitude: " + longitude, Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(CtrlDest.this, "Latitude: " + atual.latitude + "\nLongitude: " + atual.longitude, Toast.LENGTH_SHORT);
             toast.show();
 
 
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(teste, 17));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(atual, 17));
 
 
         }
 
-        setTimePercurse();
+//        setTimePercurse();
 
     }
 
-    public void setTimePercurse(){
+    public String getAddress(LatLng markerPosition){
+        String enderecoMarker = "";
+        Geocoder geocoderMarker;
+        List<Address> address = new ArrayList<Address>();
+
+            try {
+                geocoderMarker = new Geocoder(this, Locale.getDefault());
+                address.add(geocoderMarker.getFromLocation(markerPosition.latitude, markerPosition.longitude, 1).get(0));
+
+                enderecoMarker = address.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+
+                return enderecoMarker;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        return "";
+    }
+
+    public void setTimePercurse(LatLng loja){
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Victoria+BC&mode=bicycling&language=fr-FR&key=" + R.string.distance_matrix_api_key;
+
+
+        String url ="https://maps.googleapis.com/maps/api/distancematrix/json?origins="+ atual.latitude + "," + atual.longitude+ "|" +
+                "&destinations=" + loja.latitude + "," + loja.longitude + "&mode=" + meioDeLocomocao + "&language=pt-BR&key=AIzaSyCFkDm18czij6N4A8Z3bFbNmul-EU_yJvA";
+
 
         // POST parameters
         Map<String, String> params = new HashMap<String, String>();
 //        params.put("tag", "test");
 
         JSONObject jsonObj = new JSONObject(params);
+
+        final TextView tvTempo = (TextView)findViewById(R.id.tvTempo);
+        final String[] tempo = new String[1];
 
         // Request a json response from the provided URL
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest
@@ -143,7 +191,16 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                     @Override
                     public void onResponse(JSONObject response)
                     {
-                        Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+                        try {
+                            tempo[0] = response.getJSONArray("rows").getJSONObject(0).getJSONArray("elements").getJSONObject(0).getJSONObject("duration").getString("text");
+                            System.out.println("Tempo: " + tempo[0]);
+                            tvTempo.setText(tempo[0]);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        Toast.makeText(getApplicationContext(), tempo[0], Toast.LENGTH_SHORT).show();
+                        System.out.println("ERRO: " + response.toString());
                     }
                 },
                 new Response.ErrorListener()
@@ -152,6 +209,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                     public void onErrorResponse(VolleyError error)
                     {
                         Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                        System.out.println("ERRO: " + error.toString());
                     }
                 });
 
@@ -160,28 +218,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
     }
 
-    public String getAddress(){
-        Geocoder geocoder;
-        List<Address> addresses;
 
-        String endereco = "";
-
-//            try {
-//                geocoder = new Geocoder(this, Locale.getDefault());
-//                addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-//                endereco = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-//                String city = addresses.get(0).getLocality();
-//                String state = addresses.get(0).getAdminArea();
-//                String country = addresses.get(0).getCountryName();
-//                String postalCode = addresses.get(0).getPostalCode();
-//                String knownName = addresses.get(0).getFeatureName();
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
-        return endereco;
-    }
 
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
@@ -189,25 +226,31 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
 
         // Check which radio button was clicked
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.rb_APe:
                 if (checked) {
                     Toast toast = Toast.makeText(CtrlDest.this, "Você irá até o local à pé!", Toast.LENGTH_SHORT);
                     toast.show();
+                    meioDeLocomocao = "walking";
+                    setTimePercurse(new LatLng(latitudeLoja, longitudeLoja));
                 }
-                    break;
+                break;
             case R.id.rb_Carro:
                 if (checked) {
                     Toast toast = Toast.makeText(CtrlDest.this, "Você irá até o local dirigindo!", Toast.LENGTH_SHORT);
                     toast.show();
+                    meioDeLocomocao = "driving";
+                    setTimePercurse(new LatLng(latitudeLoja, longitudeLoja));
                 }
-                    break;
+                break;
             case R.id.rb_TransPub:
                 if (checked) {
                     Toast toast = Toast.makeText(CtrlDest.this, "Você irá até o local por Transporte Público!", Toast.LENGTH_SHORT);
                     toast.show();
+                    meioDeLocomocao = "transit";
+                    setTimePercurse(new LatLng(latitudeLoja, longitudeLoja));
                 }
-                    break;
+                break;
         }
     }
 

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -24,6 +25,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CtrlMontar extends AppCompatActivity {
 
@@ -37,17 +39,28 @@ public class CtrlMontar extends AppCompatActivity {
         databaseOpenHelper = new DatabaseOpenHelper(this);
 
         populateRadioGroup("Carne");
-        populateRadioGroup("Salada");
-        populateRadioGroup("Molhos");
-        populateRadioGroup("Condimentos");    }
+        populateRadioGroup("Pao");
+        populateListView("Salada");
+        populateListView("Molhos");
+        populateListView("Condimentos");
+    }
 
-    public void populateCarnes(){
+    public void populateListView(String column){
 
-        RadioGroup rg = new RadioGroup(this);
-        rg.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout ll = null;
+        Cursor cursor = null;
+        if(column.equals("Salada")){
+            ll = (LinearLayout) findViewById(R.id.llSaladas);
+            cursor = databaseOpenHelper.getSaladas();
+        }else if(column.equals("Molhos")){
+            ll = (LinearLayout) findViewById(R.id.llMolhos);
+            cursor = databaseOpenHelper.getMolhos();
+        }else if(column.equals("Condimentos")){
+            ll = (LinearLayout) findViewById(R.id.llCondimentos);
+            cursor = databaseOpenHelper.getCondimentos();
+        }
 
 
-        Cursor cursor = databaseOpenHelper.getCarnes();
 
         if (cursor.moveToFirst()){
             do{
@@ -57,31 +70,18 @@ public class CtrlMontar extends AppCompatActivity {
 
                 System.out.println("Nome: " + nome);
 
-                double x = Double.parseDouble(calorias);
-                int int_id = Integer.parseInt(id);
-
-
-                final RadioButton rdbtn = new RadioButton(this);
-                rdbtn.setId(int_id);
-                rdbtn.setText(nome + " " + calorias + " cal");
-                rdbtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast toast = Toast.makeText(CtrlMontar.this, "Carne " + rdbtn.getId() + " selecionado!", Toast.LENGTH_SHORT);
-                        toast.show();
-                        System.out.println("FOI CLICADO");
-                    }
-                });
-                rg.addView(rdbtn);
+                CheckBox cb = new CheckBox(this);
+                cb.setText(nome + " " + calorias + " cal");
+                ll.addView(cb);
 
 
             }while(cursor.moveToNext());
         }
         cursor.close();
 
-        ((ViewGroup)findViewById(R.id.rg_Carnes)).addView(rg);
 
     }
+
 
     public void populateRadioGroup(String column){
 
@@ -91,12 +91,8 @@ public class CtrlMontar extends AppCompatActivity {
         Cursor cursor = null;
         if(column.equals("Carne")){
             cursor = databaseOpenHelper.getCarnes();
-        }else if(column.equals("Salada")){
-            cursor = databaseOpenHelper.getSaladas();
-        }else if(column.equals("Molhos")) {
-            cursor = databaseOpenHelper.getMolhos();
-        }else if(column.equals("Condimentos")){
-            cursor = databaseOpenHelper.getCondimentos();
+        }else if(column.equals("Pao")){
+            cursor = databaseOpenHelper.getPaes();
         }
 
         if (cursor.moveToFirst()){
@@ -130,12 +126,8 @@ public class CtrlMontar extends AppCompatActivity {
 
         if(column.equals("Carne")){
             ((ViewGroup)findViewById(R.id.rg_Carnes)).addView(rg);
-        }else if(column.equals("Salada")){
-            ((ViewGroup)findViewById(R.id.rg_Saladas)).addView(rg);
-        }else if(column.equals("Molhos")){
-            ((ViewGroup)findViewById(R.id.rg_Molhos)).addView(rg);
-        }else if(column.equals("Condimentos")){
-            ((ViewGroup)findViewById(R.id.rg_Condimentos)).addView(rg);
+        }else if(column.equals("Pao")){
+            ((ViewGroup)findViewById(R.id.rg_Paes)).addView(rg);
         }
     }
 
