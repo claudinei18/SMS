@@ -167,44 +167,9 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
     public void setTimePercurse(LatLng loja){
 
-//        String enderecoAtual = "";
-//        String enderecoLoja = "";
-//        String cidadeAtual = "";
-//        String cidadeLoja = "";
-//        Geocoder geocoderAtual, geocoderLoja;
-//        List<Address> address = new ArrayList<Address>();
-//
-//            try {
-//                geocoderAtual = new Geocoder(this, Locale.getDefault());
-//                geocoderLoja = new Geocoder(this, Locale.getDefault());
-//                address.add(geocoderAtual.getFromLocation(atual.latitude, atual.longitude, 1).get(0));
-//                address.add(geocoderLoja.getFromLocation(loja.latitude, loja.longitude, 1).get(0));
-//                enderecoAtual = address.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-//                enderecoLoja = address.get(1).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-//
-//
-//
-//                cidadeAtual = address.get(0).getLocality(); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-//                cidadeLoja = address.get(1).getLocality(); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-//
-//                System.out.println("Atual: " + enderecoAtual + " " + cidadeAtual);
-//                System.out.println("Atual: " + enderecoLoja + " " + cidadeLoja);
-//
-////                String city = addresses.get(0).getLocality();
-////                String state = addresses.get(0).getAdminArea();
-////                String country = addresses.get(0).getCountryName();
-////                String postalCode = addresses.get(0).getPostalCode();
-////                String knownName = addresses.get(0).getFeatureName();
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
-//        String url ="https://maps.googleapis.com/maps/api/distancematrix/json?origins="+ enderecoAtual.replaceAll(" ", "+") + "|" + cidadeAtual.replaceAll(" ", "+") + "|" +
-//                "&destinations=" + enderecoLoja.replaceAll(" ", "+") + "|" + cidadeLoja.replaceAll(" ", "+") + "&mode=bicycling&language=pt-BR&key=AIzaSyCFkDm18czij6N4A8Z3bFbNmul-EU_yJvA";
 
         String url ="https://maps.googleapis.com/maps/api/distancematrix/json?origins="+ atual.latitude + "," + atual.longitude+ "|" +
                 "&destinations=" + loja.latitude + "," + loja.longitude + "&mode=" + meioDeLocomocao + "&language=pt-BR&key=AIzaSyCFkDm18czij6N4A8Z3bFbNmul-EU_yJvA";
