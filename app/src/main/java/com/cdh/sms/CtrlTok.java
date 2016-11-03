@@ -28,7 +28,6 @@ public class CtrlTok extends AppCompatActivity {
         databaseOpenHelper.insertToken(token);
 
         Cursor cursor = databaseOpenHelper.getToken();
-        System.out.println("Entrou no recuperar");
 
         if (cursor.moveToFirst()){
             do {
@@ -45,6 +44,24 @@ public class CtrlTok extends AppCompatActivity {
     public void goTelaCentral(View view) {
         Intent intent = new Intent(this, CtrlCentral.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        String pedido = "";
+        String nomUsu = "";
+        String cpfUsu = "";
+        String telUsu = "";
+
+        try {
+            pedido = getIntent().getExtras().get("pedido").toString();
+            nomUsu = getIntent().getExtras().get("nomUsu").toString();
+            cpfUsu = getIntent().getExtras().get("cpfUsu").toString();
+            telUsu = getIntent().getExtras().get("telUsu").toString();
+        }catch (Exception e){
+
+        }
+
+        databaseOpenHelper.insertPedido(cpfUsu, nomUsu, telUsu, pedido);
+
+
         startActivity(intent);
         finish();
     }

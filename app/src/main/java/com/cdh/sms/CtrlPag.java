@@ -22,11 +22,26 @@ public class CtrlPag extends AppCompatActivity {
     public void nextT(View view) {
 
         EditText et = (EditText)findViewById(R.id.et_Nome);
-        String nome = et.getText().toString();
+        String nomeUsu = et.getText().toString();
         et = (EditText)findViewById(R.id.et_CPF);
-        String CPF = et.getText().toString();
+        String cpfUsu = et.getText().toString();
+        et = (EditText)findViewById(R.id.editText_Telefone);
+        String telsu = et.getText().toString();
 
+        String pedido = "";
 
-        startActivity(new Intent(this, CtrlTok.class));
+        try {
+            pedido = getIntent().getExtras().get("pedido").toString();
+        }catch (Exception e){
+
+        }
+
+        Intent intent = new Intent(this, CtrlTok.class);
+        intent.putExtra("pedido", pedido);
+        intent.putExtra("nomeUsu", nomeUsu);
+        intent.putExtra("cpfUsu", cpfUsu);
+        intent.putExtra("telUsu", telsu);
+
+        startActivity(intent);
     }
 }

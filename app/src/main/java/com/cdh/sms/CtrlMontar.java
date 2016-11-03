@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -23,6 +24,7 @@ import com.cdh.sms.fragment_montar.CarneFragment;
 import com.cdh.sms.location.AppLocationService;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.vision.text.Line;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +75,13 @@ public class CtrlMontar extends AppCompatActivity {
                 CheckBox cb = new CheckBox(this);
                 cb.setText(nome + " " + calorias + " cal");
                 ll.addView(cb);
+
+//                ImageView iv = new ImageView(this);
+//                iv.setBackgroundResource(R.drawable.imag);
+//                iv.setMaxHeight(20);
+//                iv.setMaxWidth(20);
+//                ll.addView(iv);
+
 
 
             }while(cursor.moveToNext());
@@ -172,6 +181,66 @@ public class CtrlMontar extends AppCompatActivity {
     }
 
     public void nextD(View view) {
-        startActivity(new Intent(this, CtrlDest.class));
+
+        String pedido = "";
+
+
+        RadioGroup rgPai = (RadioGroup) findViewById(R.id.rg_Paes);
+        RadioGroup rgPaes = (RadioGroup) rgPai.getChildAt(0);
+
+        rgPai = (RadioGroup) findViewById(R.id.rg_Carnes);
+        RadioGroup rgCarnes = (RadioGroup) rgPai.getChildAt(0);
+
+        // Returns an integer which represents the selected radio button's ID
+        int paoSelecionado = rgPaes.getCheckedRadioButtonId();
+        int carneSelecionada = rgCarnes.getCheckedRadioButtonId();
+
+        RadioButton rbPaoSelecionado = (RadioButton) rgPaes.getChildAt(paoSelecionado-1);
+        pedido += rbPaoSelecionado.getText().toString();
+
+        RadioButton rbCarneSelecionada = (RadioButton) rgCarnes.getChildAt(carneSelecionada-1);
+        pedido += " " + rbCarneSelecionada.getText().toString();
+
+
+        LinearLayout ll = (LinearLayout) findViewById(R.id.llSaladas);
+        for(int i = 0; ll.getChildAt(i) != null; i++){
+            CheckBox cb = (CheckBox) ll.getChildAt(i);
+            if(cb.isChecked()){
+                pedido += " " + cb.getText();
+            }
+        }
+
+        ll = (LinearLayout) findViewById(R.id.llMolhos);
+        for(int i = 0; ll.getChildAt(i) != null; i++){
+            CheckBox cb = (CheckBox) ll.getChildAt(i);
+            if(cb.isChecked()){
+                pedido += " " + cb.getText();
+            }
+        }
+
+        ll = (LinearLayout) findViewById(R.id.llCondimentos);
+        for(int i = 0; ll.getChildAt(i) != null; i++){
+            CheckBox cb = (CheckBox) ll.getChildAt(i);
+            if(cb.isChecked()){
+                pedido += " " + cb.getText();
+            }
+        }
+
+        Toast toast = Toast.makeText(CtrlMontar.this, "Selecionado: " + pedido, Toast.LENGTH_SHORT);
+        toast.show();
+
+        // Gets a reference to our "selected" radio button
+//        RadioButton b = (RadioButton) findViewById(selected);
+
+        // Now you can get the text or whatever you want from the "selected" radio button
+//        String pao = b.getText().toString();
+
+//        pedido = pedido + pao;
+
+//        System.out.println("Pedido: " + pedido);
+
+        Intent intent = new Intent(this, CtrlDest.class);
+        intent.putExtra("pedido", pedido);
+        startActivity(intent);
     }
 }

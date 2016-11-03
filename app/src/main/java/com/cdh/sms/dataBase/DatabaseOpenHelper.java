@@ -18,11 +18,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     final static String LONGITUDE = "longitude";
     final static String[] columnsLocation = { _ID, NOME, LATITUDE, LONGITUDE };
 
-    final static String TABLE_NAME_Pedido = "pedido";
     final static String CPF = "CPF";
     final static String NUMERO = "numero";
     final static String TOKEN = "token";
-    final static String[] columnsPedido = { _ID, NOME, NUMERO , TOKEN };
 
 
     /*=============================================================================*/
@@ -44,7 +42,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     final private static String INSERT_CARNE2 = "INSERT INTO carne ("
             + NOME_CARNE + ", "
             + CALORIAS_CARNE + ") " +
-            "VALUES ('Hanbúrguer Bovino', '116');";
+            "VALUES ('Hambúrguer Bovino', '116');";
     final private static String INSERT_CARNE3 = "INSERT INTO carne ("
             + NOME_CARNE + ", "
             + CALORIAS_CARNE + ") " +
@@ -278,18 +276,32 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     /*=============================================================================*/
 
+    /*=============================================================================*/
+    final static String TABLE_NAME_Pedido = "pedido";
+    final static String NOME_USU = "nomeUsu";
+    final static String CPF_USU = "cpfUsu";
+    final static String TEL_USU = "telUsu";
+    final static String SANDUICHE = "sanduiche";
 
-
+    final static String[] columnsPedido = { _ID, NOME_USU, CPF_USU, TEL_USU, SANDUICHE };
 
     /*Create table PEDIDO*/
-    final private static String CREATE_CMD2 =
+    final private static String CREATE_PEDIDO =
 
-            "CREATE TABLE pedido (" + _ID
-                    + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + NOME + " TEXT NOT NULL,"
-                    + CPF + " TEXT NOT NULL,"
-                    + NUMERO + " TEXT NOT NULL,"
-                    + TOKEN + " TEXT NOT NULL)";
+            "CREATE TABLE pedido ("
+                    + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + NOME_USU + " TEXT NOT NULL, "
+                    + CPF_USU + " TEXT NOT NULL, "
+                    + TEL_USU + " TEXT NOT NULL, "
+                    + SANDUICHE + " TEXT NOT NULL);";
+
+    final private static String INSERT_PEDIDO1 = "INSERT INTO pedido ("
+            + NOME_USU + ", "
+            + CPF_USU + ", "
+            + TEL_USU + ", "
+            + SANDUICHE + ") " +
+            "VALUES ('Claudinei', '123.456.789-10', '(31)99999-9999', 'Sanduiche_1 Pao_1 Carne_1 Salada_1 Molho_1 Condimento_1');";
+    /*=============================================================================*/
 
 
 
@@ -362,6 +374,10 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_TOKEN);
         db.execSQL(INSERT_TOKEN1);
 
+        /*PEDIDO*/
+        db.execSQL(CREATE_PEDIDO);
+        db.execSQL(INSERT_PEDIDO1);
+
         System.out.println("Criou");
     }
 
@@ -417,10 +433,27 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 null);
     }
 
+    public Cursor getPedidos() {
+        return this.getWritableDatabase().query(DatabaseOpenHelper.TABLE_NAME_Pedido,
+                DatabaseOpenHelper.columnsPedido, null, new String[] {}, null, null,
+                null);
+    }
+
     public void insertToken(String token){
         String INSERT_TOKEN = "INSERT INTO token ("
                 + TOKEN + ") " +
                 "VALUES ('" + token + "');";
         this.getWritableDatabase().execSQL(INSERT_TOKEN);
+    }
+
+    public void insertPedido(String cpfUsu, String nomUSu, String telUsu, String pedido){
+        String INSERT_PEDIDO = "INSERT INTO pedido ("
+                + NOME_USU + ", "
+                + CPF_USU + ", "
+                + TEL_USU + ", "
+                + SANDUICHE + ") " +
+                "VALUES ('" + nomUSu + "', '" + cpfUsu + "', '" + telUsu + "', '" + pedido + "');";
+
+        this.getWritableDatabase().execSQL(INSERT_PEDIDO);
     }
 }
