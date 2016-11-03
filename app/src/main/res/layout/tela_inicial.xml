@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -8,24 +9,34 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/background"
     tools:context="com.cdh.sms.CtrlCentral">
 
-    <Button
-        android:text="@string/telaInicial_Sanduiche"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="135dp"
+
+    <ImageButton
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:id="@+id/btn_sand"
-        android:layout_alignParentTop="true"
+        android:onClick="goTelaHist"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:onClick="goTelaHist"/>
+        android:background="@drawable/button_sanduiche1"
+        android:elevation="6dp"/>
 
     <Button
         android:text="@string/telaInicial_VerToken"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:id="@+id/btn_vetTok"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/btn_sand"
-        android:onClick="goTelaToken"/>
+        android:onClick="goTelaToken"
+        android:textColor="#ffffff"
+        android:shadowRadius="10"
+        android:textSize="15dp"
+        android:typeface="monospace"
+        android:layout_marginBottom="77dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/mybutton" />
 </RelativeLayout>

@@ -17,6 +17,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:onClick="nextD"
+        android:textColor="#fff"
+        android:background="@drawable/okbutton"
         android:text="@string/telaMont_ok" />
 
     <ScrollView
