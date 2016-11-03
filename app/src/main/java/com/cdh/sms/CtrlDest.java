@@ -60,6 +60,14 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_dest);
 
+        String pedido = "";
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            pedido = extras.getString("pedido");
+        }
+
+        System.out.println("Pedido: " + pedido);
+
         RelativeLayout item = (RelativeLayout)findViewById(R.id.rl_map);
         View child = getLayoutInflater().inflate(R.layout.activity_maps, null);
         item.addView(child);
@@ -133,7 +141,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                     .snippet("Esta é sua localização !!!")
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)));
 
-            Toast toast = Toast.makeText(CtrlDest.this, "Latitude: " + atual.latitude + "\nLongitude: " + atual.longitude, Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(CtrlDest.this, getAddress(new LatLng(atual.latitude, atual.longitude)), Toast.LENGTH_SHORT);
             toast.show();
 
 
@@ -141,8 +149,6 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
 
         }
-
-//        setTimePercurse();
 
     }
 
@@ -255,7 +261,18 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
     }
 
     public void nextP(View view) {
-        startActivity(new Intent(this, CtrlPag.class));
+
+        String pedido = "";
+
+        try {
+            pedido = getIntent().getExtras().get("pedido").toString();
+        }catch (Exception e){
+
+        }
+
+        Intent intent = new Intent(this, CtrlPag.class);
+        intent.putExtra("pedido", pedido);
+        startActivity(intent);
     }
 
 }
