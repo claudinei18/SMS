@@ -183,6 +183,7 @@ public class CtrlMontar extends AppCompatActivity {
     public void nextD(View view) {
 
         String pedido = "";
+        boolean nextView = true;
 
 
         RadioGroup rgPai = (RadioGroup) findViewById(R.id.rg_Paes);
@@ -195,18 +196,29 @@ public class CtrlMontar extends AppCompatActivity {
         int paoSelecionado = rgPaes.getCheckedRadioButtonId();
         int carneSelecionada = rgCarnes.getCheckedRadioButtonId();
 
-        RadioButton rbPaoSelecionado = (RadioButton) rgPaes.getChildAt(paoSelecionado-1);
-        pedido += rbPaoSelecionado.getText().toString();
+        try {
+            RadioButton rbPaoSelecionado = (RadioButton) rgPaes.getChildAt(paoSelecionado-1);
+            pedido += rbPaoSelecionado.getText().toString();
+        }catch (Exception e){
+            Toast toast = Toast.makeText(CtrlMontar.this, "Selecione um pão.", Toast.LENGTH_SHORT);
+            toast.show();
+            nextView = false;
+        }
 
-        RadioButton rbCarneSelecionada = (RadioButton) rgCarnes.getChildAt(carneSelecionada-1);
-        pedido += " " + rbCarneSelecionada.getText().toString();
-
+        try {
+            RadioButton rbCarneSelecionada = (RadioButton) rgCarnes.getChildAt(carneSelecionada-1);
+            pedido += "\n" + rbCarneSelecionada.getText().toString();
+        }catch (Exception e){
+            Toast toast = Toast.makeText(CtrlMontar.this, "Selecione uma carne.", Toast.LENGTH_SHORT);
+            toast.show();
+            nextView = false;
+        }
 
         LinearLayout ll = (LinearLayout) findViewById(R.id.llSaladas);
         for(int i = 0; ll.getChildAt(i) != null; i++){
             CheckBox cb = (CheckBox) ll.getChildAt(i);
             if(cb.isChecked()){
-                pedido += " " + cb.getText();
+                pedido += "\n" + cb.getText();
             }
         }
 
@@ -214,7 +226,7 @@ public class CtrlMontar extends AppCompatActivity {
         for(int i = 0; ll.getChildAt(i) != null; i++){
             CheckBox cb = (CheckBox) ll.getChildAt(i);
             if(cb.isChecked()){
-                pedido += " " + cb.getText();
+                pedido += "\n" + cb.getText();
             }
         }
 
@@ -222,25 +234,17 @@ public class CtrlMontar extends AppCompatActivity {
         for(int i = 0; ll.getChildAt(i) != null; i++){
             CheckBox cb = (CheckBox) ll.getChildAt(i);
             if(cb.isChecked()){
-                pedido += " " + cb.getText();
+                pedido += "\n" + cb.getText();
             }
         }
 
-        Toast toast = Toast.makeText(CtrlMontar.this, "Selecionado: " + pedido, Toast.LENGTH_SHORT);
-        toast.show();
+        if(nextView) {
+            Toast toast = Toast.makeText(CtrlMontar.this, "Selecionado: " + pedido, Toast.LENGTH_SHORT);
+            toast.show();
 
-        // Gets a reference to our "selected" radio button
-//        RadioButton b = (RadioButton) findViewById(selected);
-
-        // Now you can get the text or whatever you want from the "selected" radio button
-//        String pao = b.getText().toString();
-
-//        pedido = pedido + pao;
-
-//        System.out.println("Pedido: " + pedido);
-
-        Intent intent = new Intent(this, CtrlDest.class);
-        intent.putExtra("pedido", pedido);
-        startActivity(intent);
+            Intent intent = new Intent(this, CtrlDest.class);
+            intent.putExtra("pedido", pedido);
+            startActivity(intent);
+        }
     }
 }
