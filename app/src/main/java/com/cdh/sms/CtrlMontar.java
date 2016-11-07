@@ -1,6 +1,8 @@
 package com.cdh.sms;
 
 import android.database.Cursor;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
@@ -238,13 +240,24 @@ public class CtrlMontar extends AppCompatActivity {
             }
         }
 
+
+        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+
+        Snackbar snackbar = Snackbar
+                .make(coordinatorLayout, "Welcome to AndroidHive", Snackbar.LENGTH_LONG);
+
+        snackbar.show();
+
+
+
         if(nextView) {
-            Toast toast = Toast.makeText(CtrlMontar.this, "Selecionado: " + pedido, Toast.LENGTH_SHORT);
-            toast.show();
+//            Toast toast = Toast.makeText(CtrlMontar.this, "Selecionado: " + pedido, Toast.LENGTH_SHORT);
+//            toast.show();
+
 
             Intent intent = new Intent(this, CtrlDest.class);
             intent.putExtra("pedido", pedido);
-            startActivity(intent);
+//            startActivity(intent);
         }
     }
 }
