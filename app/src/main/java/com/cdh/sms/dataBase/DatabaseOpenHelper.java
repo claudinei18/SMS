@@ -293,7 +293,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     + NOME_USU + " TEXT NOT NULL, "
                     + CPF_USU + " TEXT NOT NULL, "
                     + TEL_USU + " TEXT NOT NULL, "
-                    + SANDUICHE + " TEXT NOT NULL);";
+                    + SANDUICHE + " TEXT NOT NULL, "
+                    + TOKEN + " TEXT NOT NULL);";
 
     final private static String INSERT_PEDIDO1 = "INSERT INTO pedido ("
             + NOME_USU + ", "
@@ -376,7 +377,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
         /*PEDIDO*/
         db.execSQL(CREATE_PEDIDO);
-        db.execSQL(INSERT_PEDIDO1);
 
         System.out.println("Criou");
     }
@@ -446,14 +446,36 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         this.getWritableDatabase().execSQL(INSERT_TOKEN);
     }
 
-    public void insertPedido(String cpfUsu, String nomUSu, String telUsu, String pedido){
-        String INSERT_PEDIDO = "INSERT INTO pedido ("
-                + NOME_USU + ", "
-                + CPF_USU + ", "
-                + TEL_USU + ", "
-                + SANDUICHE + ") " +
-                "VALUES ('" + nomUSu + "', '" + cpfUsu + "', '" + telUsu + "', '" + pedido + "');";
+    public void insertPedido(String cpfUsu, String nomUSu, String telUsu, String pedido, String token){
 
-        this.getWritableDatabase().execSQL(INSERT_PEDIDO);
+        Cursor pedidoExiste = this.pedidoExiste(pedido);
+        if(!(pedidoExiste.moveToFirst())){
+            String INSERT_PEDIDO = "INSERT INTO pedido ("
+                    + NOME_USU + ", "
+                    + CPF_USU + ", "
+                    + TEL_USU + ", "
+                    + SANDUICHE + ", "
+                    + TOKEN + ") " +
+                    "VALUES ('" + nomUSu + "', '" + cpfUsu + "', '" + telUsu + "', '" + pedido + "', '" + token +"');";
+
+            this.getWritableDatabase().execSQL(INSERT_PEDIDO);
+        }else{
+            alterTokenPorPedido(pedido, token);
+        }
+    }
+
+    public Cursor getPedidoPorToken(String token){
+        String query = "SELECT sanduiche FROM pedido WHERE token = '" + token + "';";
+        return getWritableDatabase().rawQuery(query, null);
+    }
+
+    private Cursor pedidoExiste(String pedido){
+        String query = "SELECT sanduiche FROM pedido WHERE sanduiche = '" + pedido + "';";
+        return getWritableDatabase().rawQuery(query, null);
+    }
+
+    private void alterTokenPorPedido(String pedido, String token){
+        String query = "UPDATE pedido SET token = '" + token + "' WHERE sanduiche = '" +pedido + "';";
+        this.getWritableDatabase().execSQL(query);
     }
 }

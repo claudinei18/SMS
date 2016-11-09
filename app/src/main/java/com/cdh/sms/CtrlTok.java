@@ -13,6 +13,7 @@ import com.cdh.sms.token.TknGenerator;
 public class CtrlTok extends AppCompatActivity {
 
     DatabaseOpenHelper databaseOpenHelper;
+    String token = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +23,7 @@ public class CtrlTok extends AppCompatActivity {
         databaseOpenHelper = new DatabaseOpenHelper(this);
 
         TknGenerator tknGenerator = new TknGenerator();
-        String token = TknGenerator.makeToken();
+        token = TknGenerator.makeToken();
         System.out.println(token);
 
         databaseOpenHelper.insertToken(token);
@@ -59,7 +60,8 @@ public class CtrlTok extends AppCompatActivity {
 
         }
 
-        databaseOpenHelper.insertPedido(cpfUsu, nomUsu, telUsu, pedido);
+
+        databaseOpenHelper.insertPedido(cpfUsu, nomUsu, telUsu, pedido, token);
 
 
         startActivity(intent);

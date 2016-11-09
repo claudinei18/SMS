@@ -25,14 +25,26 @@ public class CtrlRecupToken extends AppCompatActivity {
 
 
         Cursor cursor = databaseOpenHelper.getToken();
-        System.out.println("Entrou no recuperar");
 
+        String token = "";
         if (cursor.moveToFirst()){
             do {
-                String token = cursor.getString(cursor.getColumnIndex("token"));
+                token = cursor.getString(cursor.getColumnIndex("token"));
                 System.out.println("Token: " + token);
                 TextView tv = (TextView) findViewById(R.id.tvRecToken);
                 tv.setText(token);
+            }while(cursor.moveToNext());
+            cursor.close();
+        }
+
+        cursor = databaseOpenHelper.getPedidoPorToken(token);
+
+        if (cursor.moveToFirst()){
+            do {
+                String pedido = cursor.getString(cursor.getColumnIndex("sanduiche"));
+                System.out.println("Pedido: " + pedido);
+                TextView tv = (TextView) findViewById(R.id.tvPedidoDetalhe);
+                tv.setText(pedido);
             }while(cursor.moveToNext());
             cursor.close();
         }

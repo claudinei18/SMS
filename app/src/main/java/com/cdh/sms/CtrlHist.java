@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     DatabaseOpenHelper databaseOpenHelper;
+    String sanduiche = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,6 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
         databaseOpenHelper = new DatabaseOpenHelper(this);
 
         ArrayList<String> itens = new ArrayList<>();
-        itens.add("Sanduiche1");
 
         Cursor cursor = databaseOpenHelper.getPedidos();
 
@@ -35,7 +35,7 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
                 String nomeUsu = cursor.getString(cursor.getColumnIndex("nomeUsu"));
                 String cpfUsu = cursor.getString(cursor.getColumnIndex("cpfUsu"));
                 String telUsu = cursor.getString(cursor.getColumnIndex("telUsu"));
-                String sanduiche = cursor.getString(cursor.getColumnIndex("sanduiche"));
+                sanduiche = cursor.getString(cursor.getColumnIndex("sanduiche"));
 
 
                 itens.add(sanduiche);
@@ -58,6 +58,9 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startActivity(new Intent(this, CtrlDest.class));
+        Intent intent = new Intent(this, CtrlDest.class);
+        intent.putExtra("pedido", sanduiche);
+
+        startActivity(intent);
     }
 }
