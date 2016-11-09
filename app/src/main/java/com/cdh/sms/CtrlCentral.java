@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 
 import com.cdh.sms.dataBase.DatabaseOpenHelper;
+import com.cdh.sms.intro.IntroActivity;
 
 public class CtrlCentral extends AppCompatActivity {
 
@@ -29,6 +30,7 @@ public class CtrlCentral extends AppCompatActivity {
         setContentView(R.layout.tela_inicial);
 
         checkPermission();
+        startActivity(new Intent(this, IntroActivity.class));
     }
 
     private void checkPermission() {
