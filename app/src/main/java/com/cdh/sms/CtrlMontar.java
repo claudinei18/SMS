@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -20,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cdh.sms.dataBase.DatabaseOpenHelper;
@@ -27,6 +29,7 @@ import com.cdh.sms.dataBase.DatabaseOpenHelper;
 public class CtrlMontar extends AppCompatActivity {
 
     private DatabaseOpenHelper databaseOpenHelper;
+    private int valor = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,33 +60,45 @@ public class CtrlMontar extends AppCompatActivity {
             cursor = databaseOpenHelper.getCondimentos();
         }
 
-
-
         if (cursor.moveToFirst()){
             do{
                 String id = cursor.getString(cursor.getColumnIndex("_id"));
                 String nome = cursor.getString(cursor.getColumnIndex("nome"));
                 String calorias = cursor.getString(cursor.getColumnIndex("calorias"));
+                String preco = cursor.getString(cursor.getColumnIndex("preco"));
 
                 System.out.println("Nome: " + nome);
 
                 CheckBox cb = new CheckBox(this);
-                cb.setText(nome + " " + calorias + " cal");
+                cb.setText(nome + " " + calorias + " cal R$ " + preco + ",00");
+                cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                      @Override
+                      public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                          if(isChecked){
+                              String preco = buttonView.getText().toString();
+                              preco = preco.split(",|\\$")[1];
+                              int val = Integer.parseInt(preco.substring(1,preco.length()));
+                              valor += val;
+                              updateTextViewValor();
+                          }
+                      }
+                  }
+                );
                 ll.addView(cb);
-
-//                ImageView iv = new ImageView(this);
-//                iv.setBackgroundResource(R.drawable.imag);
-//                iv.setMaxHeight(20);
-//                iv.setMaxWidth(20);
-//                ll.addView(iv);
-
-
 
             }while(cursor.moveToNext());
         }
         cursor.close();
 
+    }
 
+    public void updateTextViewValor(){
+        TextView tv = (TextView) findViewById(R.id.tvValor);
+        if (tv == null){
+            Log.i("textview","null");
+        }
+        else tv.setText(String.valueOf(valor));
     }
 
 
@@ -104,6 +119,7 @@ public class CtrlMontar extends AppCompatActivity {
                 String id = cursor.getString(cursor.getColumnIndex("_id"));
                 String nome = cursor.getString(cursor.getColumnIndex("nome"));
                 String calorias = cursor.getString(cursor.getColumnIndex("calorias"));
+                String preco = cursor.getString(cursor.getColumnIndex("preco"));
 
                 System.out.println("Nome: " + nome);
 
@@ -113,10 +129,15 @@ public class CtrlMontar extends AppCompatActivity {
 
                 final RadioButton rdbtn = new RadioButton(this);
                 rdbtn.setId(int_id);
-                rdbtn.setText(nome + " " + calorias + " cal");
+                rdbtn.setText(nome + " " + calorias + " cal R$ " + preco + ",00");
                 rdbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        String preco = rdbtn.getText().toString();
+                        preco = preco.split(",|\\$")[1];
+                        int val = Integer.parseInt(preco.substring(1,preco.length()));
+                        valor += val;
+                        updateTextViewValor();
                         Toast toast = Toast.makeText(CtrlMontar.this, rdbtn.getText() + " selecionado!", Toast.LENGTH_SHORT);
                         toast.show();
                     }
@@ -163,7 +184,7 @@ public class CtrlMontar extends AppCompatActivity {
                         System.out.println("CLICADO");
                     }
                 });
-                rprms= new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
+                rprms = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
 
                 rgp.addView(radioButton, rprms);
 
