@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,20 +27,32 @@ public class CtrlPag extends AppCompatActivity {
 
         EditText etNome = (EditText)findViewById(R.id.et_Nome);
         String nomeUsu = etNome.getText().toString();
-        etNome.addTextChangedListener(textWatcher);
+        System.out.println("NomUsu: " + nomeUsu);
 
         EditText etCPF = (EditText)findViewById(R.id.et_CPF);
         String cpfUsu = etCPF.getText().toString();
-        etCPF.addTextChangedListener(textWatcher);
+
+        EditText etNumCart = (EditText)findViewById(R.id.et_NumeroCartao);
+        String numCar = etNumCart.getText().toString();
+
+        EditText etCodSeg = (EditText)findViewById(R.id.et_CodSeg);
+        String codSeg = etCodSeg.getText().toString();
+
+        EditText etNomImp = (EditText)findViewById(R.id.et_NomeImpresso);
+        String nomImp = etNomImp.getText().toString();
+
+        EditText etDatVal= (EditText)findViewById(R.id.et_DataVal);
+        String datVal = etDatVal.getText().toString();
 
         EditText etTel = (EditText)findViewById(R.id.editText_Telefone);
-
-        String telsu = etTel.getText().toString();
+        String telUsu = etTel.getText().toString();
 
         String pedido = "";
+        float valor = 0;
 
         try {
             pedido = getIntent().getExtras().get("pedido").toString();
+            valor = Float.parseFloat(getIntent().getExtras().get("valor").toString());
         }catch (Exception e){
 
         }
@@ -48,32 +61,8 @@ public class CtrlPag extends AppCompatActivity {
         intent.putExtra("pedido", pedido);
         intent.putExtra("nomeUsu", nomeUsu);
         intent.putExtra("cpfUsu", cpfUsu);
-        intent.putExtra("telUsu", telsu);
-
+        intent.putExtra("telUsu", telUsu);
+        intent.putExtra("valor", valor);
         startActivity(intent);
     }
-
-    private final TextWatcher textWatcher = new TextWatcher() {
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if(s.length() > 2){
-                Toast toast = Toast.makeText(CtrlPag.this, " selecionado!", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        }
-
-        public void afterTextChanged(Editable s)
-        {
-            if(s.length() > 2){
-                Toast toast = Toast.makeText(CtrlPag.this, " selecionado!", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        }
-    };
 }

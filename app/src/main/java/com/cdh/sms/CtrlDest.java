@@ -66,8 +66,6 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
             pedido = extras.getString("pedido");
         }
 
-        System.out.println("Pedido: " + pedido);
-
         RelativeLayout item = (RelativeLayout)findViewById(R.id.rl_map);
         View child = getLayoutInflater().inflate(R.layout.activity_maps, null);
         item.addView(child);
@@ -102,8 +100,6 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                     String lat = cursor.getString(cursor.getColumnIndex("latitude"));
                     String longi = cursor.getString(cursor.getColumnIndex("longitude"));
                     String id = cursor.getString(cursor.getColumnIndex("_id"));
-
-                    System.out.println("Nome: " + nome);
 
                     double x = Double.parseDouble(lat);
                     double y = Double.parseDouble(longi);
@@ -199,7 +195,6 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                     {
                         try {
                             tempo[0] = response.getJSONArray("rows").getJSONObject(0).getJSONArray("elements").getJSONObject(0).getJSONObject("duration").getString("text");
-                            System.out.println("Tempo: " + tempo[0]);
                             tvTempo.setText(tempo[0]);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -263,15 +258,18 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
     public void nextP(View view) {
 
         String pedido = "";
+        float valor = 0;
 
         try {
             pedido = getIntent().getExtras().get("pedido").toString();
+            valor = Float.parseFloat(getIntent().getExtras().get("valor").toString());
         }catch (Exception e){
 
         }
 
         Intent intent = new Intent(this, CtrlPag.class);
         intent.putExtra("pedido", pedido);
+        intent.putExtra("valor", valor);
         startActivity(intent);
     }
 

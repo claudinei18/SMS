@@ -23,8 +23,7 @@ public class CtrlTok extends AppCompatActivity {
         databaseOpenHelper = new DatabaseOpenHelper(this);
 
         TknGenerator tknGenerator = new TknGenerator();
-        token = TknGenerator.makeToken();
-        System.out.println(token);
+        token = tknGenerator.makeToken();
 
         databaseOpenHelper.insertToken(token);
 
@@ -33,7 +32,6 @@ public class CtrlTok extends AppCompatActivity {
         if (cursor.moveToFirst()){
             do {
                 String x = cursor.getString(cursor.getColumnIndex("token"));
-                System.out.println("Token: " + x);
             }while(cursor.moveToNext());
             cursor.close();
         }
@@ -50,19 +48,19 @@ public class CtrlTok extends AppCompatActivity {
         String nomUsu = "";
         String cpfUsu = "";
         String telUsu = "";
+        float valor = 0;
 
         try {
             pedido = getIntent().getExtras().get("pedido").toString();
             nomUsu = getIntent().getExtras().get("nomUsu").toString();
             cpfUsu = getIntent().getExtras().get("cpfUsu").toString();
             telUsu = getIntent().getExtras().get("telUsu").toString();
+            valor = Float.parseFloat(getIntent().getExtras().get("valor").toString());
         }catch (Exception e){
 
         }
 
-
-        databaseOpenHelper.insertPedido(cpfUsu, nomUsu, telUsu, pedido, token);
-
+        databaseOpenHelper.insertPedido(cpfUsu, nomUsu, telUsu, pedido, valor, token);
 
         startActivity(intent);
         finish();

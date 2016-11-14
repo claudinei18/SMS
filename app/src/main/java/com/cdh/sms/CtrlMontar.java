@@ -29,7 +29,9 @@ import com.cdh.sms.dataBase.DatabaseOpenHelper;
 public class CtrlMontar extends AppCompatActivity {
 
     private DatabaseOpenHelper databaseOpenHelper;
-    private int valor = 0;
+    private float valor = 0;
+    private float ultimoPao = 0;
+    private float ultimaCarne = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +40,8 @@ public class CtrlMontar extends AppCompatActivity {
 
         databaseOpenHelper = new DatabaseOpenHelper(this);
 
-        populateRadioGroup("Carne");
-        populateRadioGroup("Pao");
+        populateRadioGroupCarne();
+        populateRadioGroupPao();
         populateListView("Salada");
         populateListView("Molhos");
         populateListView("Condimentos");
@@ -67,7 +69,6 @@ public class CtrlMontar extends AppCompatActivity {
                 String calorias = cursor.getString(cursor.getColumnIndex("calorias"));
                 String preco = cursor.getString(cursor.getColumnIndex("preco"));
 
-                System.out.println("Nome: " + nome);
 
                 CheckBox cb = new CheckBox(this);
                 cb.setText(nome + " " + calorias + " cal R$ " + preco + ",00");
@@ -101,18 +102,13 @@ public class CtrlMontar extends AppCompatActivity {
         else tv.setText(String.valueOf(valor));
     }
 
-
-    public void populateRadioGroup(String column){
+    public void populateRadioGroupPao(){
 
         RadioGroup rg = new RadioGroup(this);
         rg.setOrientation(LinearLayout.VERTICAL);
 
         Cursor cursor = null;
-        if(column.equals("Carne")){
-            cursor = databaseOpenHelper.getCarnes();
-        }else if(column.equals("Pao")){
-            cursor = databaseOpenHelper.getPaes();
-        }
+        cursor = databaseOpenHelper.getPaes();
 
         if (cursor.moveToFirst()){
             do{
@@ -121,7 +117,6 @@ public class CtrlMontar extends AppCompatActivity {
                 String calorias = cursor.getString(cursor.getColumnIndex("calorias"));
                 String preco = cursor.getString(cursor.getColumnIndex("preco"));
 
-                System.out.println("Nome: " + nome);
 
                 double x = Double.parseDouble(calorias);
                 int int_id = Integer.parseInt(id);
@@ -135,8 +130,11 @@ public class CtrlMontar extends AppCompatActivity {
                     public void onClick(View v) {
                         String preco = rdbtn.getText().toString();
                         preco = preco.split(",|\\$")[1];
-                        int val = Integer.parseInt(preco.substring(1,preco.length()));
+                        float val = Float.parseFloat(preco.substring(1,preco.length()));
+                        valor -= ultimoPao;
+                        ultimoPao = val;
                         valor += val;
+                        Toast.makeText(CtrlMontar.this, ""+v.getId(), Toast.LENGTH_SHORT).show();
                         updateTextViewValor();
                         Toast toast = Toast.makeText(CtrlMontar.this, rdbtn.getText() + " selecionado!", Toast.LENGTH_SHORT);
                         toast.show();
@@ -149,52 +147,56 @@ public class CtrlMontar extends AppCompatActivity {
         }
         cursor.close();
 
-        if(column.equals("Carne")){
-            ((ViewGroup)findViewById(R.id.rg_Carnes)).addView(rg);
-        }else if(column.equals("Pao")){
-            ((ViewGroup)findViewById(R.id.rg_Paes)).addView(rg);
-        }
+        ((ViewGroup)findViewById(R.id.rg_Paes)).addView(rg);
     }
 
-    public void teste(){
+    public void populateRadioGroupCarne(){
 
-        RadioGroup rgp= (RadioGroup) findViewById(R.id.rg_Carnes);
-        RadioGroup.LayoutParams rprms;
+        RadioGroup rg = new RadioGroup(this);
+        rg.setOrientation(LinearLayout.VERTICAL);
 
-        Cursor cursor = databaseOpenHelper.getCarnes();
+        Cursor cursor = null;
+        cursor = databaseOpenHelper.getCarnes();
 
         if (cursor.moveToFirst()){
             do{
                 String id = cursor.getString(cursor.getColumnIndex("_id"));
                 String nome = cursor.getString(cursor.getColumnIndex("nome"));
                 String calorias = cursor.getString(cursor.getColumnIndex("calorias"));
+                String preco = cursor.getString(cursor.getColumnIndex("preco"));
 
-                System.out.println("Nome: " + nome);
 
                 double x = Double.parseDouble(calorias);
                 int int_id = Integer.parseInt(id);
 
 
-                RadioButton radioButton = new RadioButton(this);
-                radioButton.setId(int_id);
-                radioButton.setText(nome + " " + calorias + " cal");
-                radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                final RadioButton rdbtn = new RadioButton(this);
+                rdbtn.setId(int_id);
+                rdbtn.setText(nome + " " + calorias + " cal R$ " + preco + ",00");
+                rdbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        System.out.println("CLICADO");
+                    public void onClick(View v) {
+                        String preco = rdbtn.getText().toString();
+                        preco = preco.split(",|\\$")[1];
+                        float val = Float.parseFloat(preco.substring(1,preco.length()));
+                        valor -= ultimaCarne;
+                        ultimaCarne = val;
+                        valor += val;
+                        Toast.makeText(CtrlMontar.this, ""+v.getId(), Toast.LENGTH_SHORT).show();
+                        updateTextViewValor();
+                        Toast toast = Toast.makeText(CtrlMontar.this, rdbtn.getText() + " selecionado!", Toast.LENGTH_SHORT);
+                        toast.show();
                     }
                 });
-                rprms = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
-
-                rgp.addView(radioButton, rprms);
-
+                rg.addView(rdbtn);
 
 
             }while(cursor.moveToNext());
         }
         cursor.close();
-
+        ((ViewGroup)findViewById(R.id.rg_Carnes)).addView(rg);
     }
+
 
     public void nextD(View view) {
 
@@ -261,6 +263,8 @@ public class CtrlMontar extends AppCompatActivity {
 
             Intent intent = new Intent(CtrlMontar.this, CtrlDest.class);
             intent.putExtra("pedido", pedido);
+            intent.putExtra("valor", valor);
+
             startActivity(intent);
         }
     }

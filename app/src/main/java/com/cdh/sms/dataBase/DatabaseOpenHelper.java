@@ -318,6 +318,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     final static String CPF_USU = "cpfUsu";
     final static String TEL_USU = "telUsu";
     final static String SANDUICHE = "sanduiche";
+    final static String VALOR = "valor";
 
     final static String[] columnsPedido = { _ID, NOME_USU, CPF_USU, TEL_USU, SANDUICHE };
 
@@ -330,6 +331,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     + CPF_USU + " TEXT NOT NULL, "
                     + TEL_USU + " TEXT NOT NULL, "
                     + SANDUICHE + " TEXT NOT NULL, "
+                    + VALOR + " REAL NOT NULL, "
                     + TOKEN + " TEXT NOT NULL);";
 
     final private static String INSERT_PEDIDO1 = "INSERT INTO pedido ("
@@ -413,8 +415,6 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
         /*PEDIDO*/
         db.execSQL(CREATE_PEDIDO);
-
-        System.out.println("Criou");
     }
 
     @Override
@@ -482,7 +482,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         this.getWritableDatabase().execSQL(INSERT_TOKEN);
     }
 
-    public void insertPedido(String cpfUsu, String nomUSu, String telUsu, String pedido, String token){
+    public void insertPedido(String cpfUsu, String nomUSu, String telUsu, String pedido, float valor, String token){
 
         Cursor pedidoExiste = this.pedidoExiste(pedido);
         if(!(pedidoExiste.moveToFirst())){
@@ -491,8 +491,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     + CPF_USU + ", "
                     + TEL_USU + ", "
                     + SANDUICHE + ", "
+                    + VALOR + ", "
                     + TOKEN + ") " +
-                    "VALUES ('" + nomUSu + "', '" + cpfUsu + "', '" + telUsu + "', '" + pedido + "', '" + token +"');";
+                    "VALUES ('" + nomUSu + "', '" + cpfUsu + "', '" + telUsu + "', '" + pedido + "', '" + valor +"', '" + token +"');";
 
             this.getWritableDatabase().execSQL(INSERT_PEDIDO);
         }else{
@@ -501,7 +502,12 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getPedidoPorToken(String token){
-        String query = "SELECT sanduiche FROM pedido WHERE token = '" + token + "';";
+        String query = "SELECT * FROM pedido WHERE token = '" + token + "';";
+        return getWritableDatabase().rawQuery(query, null);
+    }
+
+    public Cursor getValorPorToken(String token){
+        String query = "SELECT valor FROM pedido WHERE token = '" + token + "';";
         return getWritableDatabase().rawQuery(query, null);
     }
 

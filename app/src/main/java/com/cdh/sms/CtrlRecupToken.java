@@ -5,12 +5,10 @@ import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cdh.sms.dataBase.DatabaseOpenHelper;
-import com.cdh.sms.token.TknGenerator;
 
 public class CtrlRecupToken extends AppCompatActivity {
 
@@ -30,7 +28,6 @@ public class CtrlRecupToken extends AppCompatActivity {
         if (cursor.moveToFirst()){
             do {
                 token = cursor.getString(cursor.getColumnIndex("token"));
-                System.out.println("Token: " + token);
                 TextView tv = (TextView) findViewById(R.id.tvRecToken);
                 tv.setText(token);
             }while(cursor.moveToNext());
@@ -42,13 +39,29 @@ public class CtrlRecupToken extends AppCompatActivity {
         if (cursor.moveToFirst()){
             do {
                 String pedido = cursor.getString(cursor.getColumnIndex("sanduiche"));
+                String nomeUsu = cursor.getString(cursor.getColumnIndex("nomeUsu"));
+
+                float valor = cursor.getFloat(cursor.getColumnIndex("valor"));
+                pedido += "\nValor: R$" + valor + "0";
                 System.out.println("Pedido: " + pedido);
+                System.out.println("Valor: " + valor);
                 TextView tv = (TextView) findViewById(R.id.tvPedidoDetalhe);
                 tv.setText(pedido);
             }while(cursor.moveToNext());
             cursor.close();
         }
 
+
+        cursor = databaseOpenHelper.getValorPorToken(token);
+
+        if (cursor.moveToFirst()){
+            do {
+                float valor = cursor.getFloat(cursor.getColumnIndex("valor"));
+                Toast.makeText(CtrlRecupToken.this, ""+valor, Toast.LENGTH_SHORT).show();
+
+            }while(cursor.moveToNext());
+            cursor.close();
+        }
     }
 
     public void goTelaCentral(View view) {
