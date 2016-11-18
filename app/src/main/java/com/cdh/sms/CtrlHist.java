@@ -37,9 +37,7 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
                 String telUsu = cursor.getString(cursor.getColumnIndex("telUsu"));
                 sanduiche = cursor.getString(cursor.getColumnIndex("sanduiche"));
 
-
                 itens.add(sanduiche);
-
 
             }while(cursor.moveToNext());
         }

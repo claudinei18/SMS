@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.cdh.sms.dataBase.DatabaseOpenHelper;
 import com.cdh.sms.intro.IntroActivity;
+import com.cdh.sms.tools.SharedPreferencesHelper;
 
 public class CtrlCentral extends AppCompatActivity {
 
@@ -30,39 +31,16 @@ public class CtrlCentral extends AppCompatActivity {
         setContentView(R.layout.tela_inicial);
 
         checkPermission();
-        startActivity(new Intent(this, IntroActivity.class));
+        if (new SharedPreferencesHelper(this).isFirstAccess()) {
+            startActivity(new Intent(this, IntroActivity.class));
+        }
     }
 
     private void checkPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-//            if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
-//
-//                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//                builder.setTitle("Location Permission Request")
-//                        .setCancelable(false)
-//                        .setNegativeButton("no", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.dismiss();
-//                            }
-//                        })
-//                        .setPositiveButton("go", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        Intent intent = new Intent();
-//                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-//                        Uri uri = Uri.fromParts("package", CtrlCentral.this.getPackageName(), null);
-//                        intent.setData(uri);
-//                        CtrlCentral.this.startActivity(intent);
-//                        dialog.dismiss();
-//                    }
-//                }).show();
-//
-//            } else {
-//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_REQUEST);
-//            }
+
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_REQUEST);
         }
     }
@@ -89,5 +67,9 @@ public class CtrlCentral extends AppCompatActivity {
 
     public void goTelaHist(View view) {
         startActivity(new Intent(this, CtrlHist.class));
+    }
+
+    public void reset(View view) {
+        new SharedPreferencesHelper(this).setFirstAccess(true);
     }
 }

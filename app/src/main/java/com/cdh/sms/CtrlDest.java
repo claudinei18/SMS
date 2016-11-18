@@ -8,6 +8,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -261,15 +262,17 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
         float valor = 0;
 
         try {
-            pedido = getIntent().getExtras().get("pedido").toString();
-            valor = Float.parseFloat(getIntent().getExtras().get("valor").toString());
+            pedido = getIntent().getStringExtra("pedido");
+            valor = getIntent().getFloatExtra("valor", valor);
         }catch (Exception e){
 
         }
 
+        Log.i("dest","valor: " + valor);
+
         Intent intent = new Intent(this, CtrlPag.class);
         intent.putExtra("pedido", pedido);
-        intent.putExtra("valor", valor);
+        intent.getFloatExtra("valor", valor);
         startActivity(intent);
     }
 

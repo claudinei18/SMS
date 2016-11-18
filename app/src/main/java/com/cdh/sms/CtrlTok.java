@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -51,15 +52,17 @@ public class CtrlTok extends AppCompatActivity {
         float valor = 0;
 
         try {
+            valor = getIntent().getFloatExtra("valor", 0f);
+
             pedido = getIntent().getExtras().get("pedido").toString();
             nomUsu = getIntent().getExtras().get("nomUsu").toString();
             cpfUsu = getIntent().getExtras().get("cpfUsu").toString();
             telUsu = getIntent().getExtras().get("telUsu").toString();
-            valor = Float.parseFloat(getIntent().getExtras().get("valor").toString());
         }catch (Exception e){
 
         }
 
+        Log.i("tok","valor: " + valor);
         databaseOpenHelper.insertPedido(cpfUsu, nomUsu, telUsu, pedido, valor, token);
 
         startActivity(intent);

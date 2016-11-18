@@ -15,10 +15,20 @@ import com.cdh.sms.dataBase.DatabaseOpenHelper;
 public class CtrlPag extends AppCompatActivity {
     private DatabaseOpenHelper databaseOpenHelper;
 
+    String pedido = "";
+    float valor = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_pag);
+
+        try {
+            pedido = getIntent().getStringExtra("pedido");
+            valor = getIntent().getFloatExtra("valor", valor);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         databaseOpenHelper = new DatabaseOpenHelper(this);
     }
@@ -46,16 +56,18 @@ public class CtrlPag extends AppCompatActivity {
 
         EditText etTel = (EditText)findViewById(R.id.editText_Telefone);
         String telUsu = etTel.getText().toString();
+//
+//        String pedido = "";
+//        float valor = 0;
+//
+//        try {
+//            pedido = getIntent().getStringExtra("pedido");
+//            valor = getIntent().getFloatExtra("valor", valor);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
 
-        String pedido = "";
-        float valor = 0;
-
-        try {
-            pedido = getIntent().getExtras().get("pedido").toString();
-            valor = Float.parseFloat(getIntent().getExtras().get("valor").toString());
-        }catch (Exception e){
-
-        }
+        Log.i("pag","valor: " + valor);
 
         Intent intent = new Intent(this, CtrlTok.class);
         intent.putExtra("pedido", pedido);
