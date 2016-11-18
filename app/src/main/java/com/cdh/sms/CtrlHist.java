@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.cdh.sms.dataBase.DatabaseOpenHelper;
 
@@ -31,10 +32,6 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
 
         if (cursor.moveToFirst()){
             do{
-                String id = cursor.getString(cursor.getColumnIndex("_id"));
-                String nomeUsu = cursor.getString(cursor.getColumnIndex("nomeUsu"));
-                String cpfUsu = cursor.getString(cursor.getColumnIndex("cpfUsu"));
-                String telUsu = cursor.getString(cursor.getColumnIndex("telUsu"));
                 sanduiche = cursor.getString(cursor.getColumnIndex("sanduiche"));
 
                 itens.add(sanduiche);
@@ -42,6 +39,10 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
             }while(cursor.moveToNext());
         }
         cursor.close();
+
+        if (itens.size() != 0) {
+            ((TextView)findViewById(R.id.txt_lv)).setVisibility(View.GONE);
+        }
 
         ListView listView = (ListView) findViewById(R.id.list_view);
         listView.setOnItemClickListener(this);

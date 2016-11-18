@@ -54,10 +54,10 @@ public class CtrlTok extends AppCompatActivity {
         try {
             valor = getIntent().getFloatExtra("valor", 0f);
 
-            pedido = getIntent().getExtras().get("pedido").toString();
-            nomUsu = getIntent().getExtras().get("nomUsu").toString();
-            cpfUsu = getIntent().getExtras().get("cpfUsu").toString();
-            telUsu = getIntent().getExtras().get("telUsu").toString();
+            pedido = getIntent().getStringExtra("pedido");
+            nomUsu = getIntent().getStringExtra("nomUsu");
+            cpfUsu = getIntent().getStringExtra("cpfUsu");
+            telUsu = getIntent().getStringExtra("telUsu");
         }catch (Exception e){
 
         }
