@@ -28,15 +28,6 @@ public class CtrlTok extends AppCompatActivity {
 
         databaseOpenHelper.insertToken(token);
 
-        Cursor cursor = databaseOpenHelper.getToken();
-
-        if (cursor.moveToFirst()){
-            do {
-                String x = cursor.getString(cursor.getColumnIndex("token"));
-            }while(cursor.moveToNext());
-            cursor.close();
-        }
-
         TextView tv = (TextView)findViewById(R.id.tvToken);
         tv.setText(token);
     }

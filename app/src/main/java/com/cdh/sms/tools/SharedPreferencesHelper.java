@@ -42,4 +42,16 @@ public class SharedPreferencesHelper {
     public float getPrice() {
         return sharedPreferences.getFloat(PRICE, 0f);
     }
+
+    private static final String LAST_TOKEN = "last_token";
+
+    public void setLastToken(String token) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(LAST_TOKEN, token);
+        editor.commit();
+    }
+
+    public String getLastToken() {
+        return sharedPreferences.getString(LAST_TOKEN, "");
+    }
 }

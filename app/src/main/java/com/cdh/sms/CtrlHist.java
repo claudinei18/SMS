@@ -18,6 +18,7 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
 
     DatabaseOpenHelper databaseOpenHelper;
     String sanduiche = "";
+    ArrayList<String> itens;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
 
         databaseOpenHelper = new DatabaseOpenHelper(this);
 
-        ArrayList<String> itens = new ArrayList<>();
+        itens = new ArrayList<>();
 
         Cursor cursor = databaseOpenHelper.getPedidos();
 
@@ -58,7 +59,7 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, CtrlDest.class);
-        intent.putExtra("pedido", sanduiche);
+        intent.putExtra("pedido", itens.get(position));
 
         startActivity(intent);
     }

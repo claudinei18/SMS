@@ -61,11 +61,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_dest);
 
-        String pedido = "";
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            pedido = extras.getString("pedido");
-        }
+        Log.i("Dest:", "Pedido: " +getIntent().getStringExtra("pedido"));
 
         RelativeLayout item = (RelativeLayout)findViewById(R.id.rl_map);
         View child = getLayoutInflater().inflate(R.layout.activity_maps, null);
