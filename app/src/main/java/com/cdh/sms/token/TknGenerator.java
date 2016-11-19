@@ -9,10 +9,9 @@ public class TknGenerator {
 		'I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
 	};
 	private static final int NUMS_N_LETTS_SIZE = 36;
-	private static final int TOKEN_SIZE = 8;
+	private static final int TOKEN_SIZE = 30;
 
 	public TknGenerator(){
-
 	}
 	
 	public static String makeToken() {
