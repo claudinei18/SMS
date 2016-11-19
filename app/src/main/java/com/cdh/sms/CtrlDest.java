@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,7 +22,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.cdh.sms.dataBase.DatabaseOpenHelper;
-import com.cdh.sms.httpRequest.CustomRequest;
 import com.cdh.sms.location.AppLocationService;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -71,17 +69,19 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
-        databaseOpenHelper = new DatabaseOpenHelper(this);
-
         appLocationService = new AppLocationService(CtrlDest.this);
+        databaseOpenHelper = new DatabaseOpenHelper(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        appLocationService.unregister();
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        appLocationService = new AppLocationService(CtrlDest.this);
 
         Location gpsLocation = appLocationService.getLocation(LocationManager.GPS_PROVIDER);
 
@@ -118,9 +118,9 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                         }
                     });
 
-        }while(cursor.moveToNext());
-    }
-    cursor.close();
+                }while(cursor.moveToNext());
+            }
+            cursor.close();
 
             RadioButton rbCar = (RadioButton)findViewById(R.id.rb_Carro);
             rbCar.setChecked(true);
@@ -139,8 +139,6 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
 
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(atual, 17));
-
-
         }
 
     }
@@ -269,6 +267,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
         Intent intent = new Intent(this, CtrlPag.class);
         intent.putExtra("pedido", pedido);
         intent.putExtra("valor", valor);
+        appLocationService.unregister();
         startActivity(intent);
     }
 
