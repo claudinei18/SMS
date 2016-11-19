@@ -258,9 +258,6 @@ public class CtrlMontar extends AppCompatActivity {
 
 
         if(nextView) {
-            Toast toast = Toast.makeText(CtrlMontar.this, "Selecionado: " + pedido, Toast.LENGTH_SHORT);
-            toast.show();
-
             Intent intent = new Intent(CtrlMontar.this, CtrlDest.class);
             intent.putExtra("pedido", pedido);
             intent.putExtra("valor", valor);

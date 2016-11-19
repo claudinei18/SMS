@@ -262,10 +262,12 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
         try {
             pedido = getIntent().getExtras().get("pedido").toString();
-            valor = Float.parseFloat(getIntent().getExtras().get("valor").toString());
+            valor = getIntent().getFloatExtra("valor", 0.0f);
         }catch (Exception e){
 
         }
+
+        System.out.println("valor"+valor);
 
         Intent intent = new Intent(this, CtrlPag.class);
         intent.putExtra("pedido", pedido);

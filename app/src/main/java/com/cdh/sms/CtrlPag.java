@@ -28,6 +28,7 @@ public class CtrlPag extends AppCompatActivity {
         EditText etNome = (EditText)findViewById(R.id.et_Nome);
         String nomeUsu = etNome.getText().toString();
         System.out.println("NomUsu: " + nomeUsu);
+        Log.i("nomeUsu",""+nomeUsu);
 
         EditText etCPF = (EditText)findViewById(R.id.et_CPF);
         String cpfUsu = etCPF.getText().toString();
@@ -52,17 +53,21 @@ public class CtrlPag extends AppCompatActivity {
 
         try {
             pedido = getIntent().getExtras().get("pedido").toString();
-            valor = Float.parseFloat(getIntent().getExtras().get("valor").toString());
+            valor = getIntent().getFloatExtra("valor", 0.0f);
         }catch (Exception e){
-
+            e.printStackTrace();
         }
 
+        Bundle bundle = new Bundle();
+        bundle.putFloat("valor", valor);
+        bundle.putString("pedido", pedido);
+        bundle.putString("nomeUsu", nomeUsu);
+        bundle.putString("cpfUsu", cpfUsu);
+        bundle.putString("telUsu", telUsu);
+
+        Log.i("CtrlPag", "Valor = " + valor);
         Intent intent = new Intent(this, CtrlTok.class);
-        intent.putExtra("pedido", pedido);
-        intent.putExtra("nomeUsu", nomeUsu);
-        intent.putExtra("cpfUsu", cpfUsu);
-        intent.putExtra("telUsu", telUsu);
-        intent.putExtra("valor", valor);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 }

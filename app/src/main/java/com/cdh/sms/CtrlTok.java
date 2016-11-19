@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -41,8 +42,6 @@ public class CtrlTok extends AppCompatActivity {
     }
 
     public void goTelaCentral(View view) {
-        Intent intent = new Intent(this, CtrlCentral.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
         String pedido = "";
         String nomUsu = "";
@@ -51,16 +50,20 @@ public class CtrlTok extends AppCompatActivity {
         float valor = 0;
 
         try {
-            pedido = getIntent().getExtras().get("pedido").toString();
-            nomUsu = getIntent().getExtras().get("nomUsu").toString();
-            cpfUsu = getIntent().getExtras().get("cpfUsu").toString();
-            telUsu = getIntent().getExtras().get("telUsu").toString();
-            valor = Float.parseFloat(getIntent().getExtras().get("valor").toString());
+            pedido = getIntent().getExtras().getString("pedido");
+            nomUsu = getIntent().getExtras().getString("nomUsu");
+            cpfUsu = getIntent().getExtras().getString("cpfUsu");
+            telUsu = getIntent().getExtras().getString("telUsu");
+            valor = getIntent().getExtras().getFloat("valor");
         }catch (Exception e){
 
         }
 
+        Log.i("CtrlTok", "Valor = " + valor);
         databaseOpenHelper.insertPedido(cpfUsu, nomUsu, telUsu, pedido, valor, token);
+
+        Intent intent = new Intent(this, CtrlCentral.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
         startActivity(intent);
         finish();

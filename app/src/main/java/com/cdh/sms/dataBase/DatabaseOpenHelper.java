@@ -482,7 +482,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         this.getWritableDatabase().execSQL(INSERT_TOKEN);
     }
 
-    public void insertPedido(String cpfUsu, String nomUSu, String telUsu, String pedido, float valor, String token){
+    public void insertPedido(String cpfUsu, String nomUSu, String telUsu, String pedido, double valor, String token){
 
         Cursor pedidoExiste = this.pedidoExiste(pedido);
         if(!(pedidoExiste.moveToFirst())){
@@ -493,7 +493,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                     + SANDUICHE + ", "
                     + VALOR + ", "
                     + TOKEN + ") " +
-                    "VALUES ('" + nomUSu + "', '" + cpfUsu + "', '" + telUsu + "', '" + pedido + "', '" + valor +"', '" + token +"');";
+                    "VALUES ('" + nomUSu + "', '" + cpfUsu + "', '" + telUsu + "', '" + pedido + "', " + valor +", '" + token +"');";
 
             this.getWritableDatabase().execSQL(INSERT_PEDIDO);
         }else{
