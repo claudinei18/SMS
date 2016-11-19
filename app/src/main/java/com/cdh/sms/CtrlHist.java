@@ -49,7 +49,6 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
         listView.setOnItemClickListener(this);
         ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, itens);
         listView.setAdapter(adapter);
-
     }
 
     public void nextDe(View view) {
