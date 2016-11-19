@@ -82,6 +82,12 @@ public class CtrlMontar extends AppCompatActivity {
                               int val = Integer.parseInt(preco.substring(1,preco.length()));
                               valor += val;
                               updateTextViewValor();
+                          } else {
+                              String preco = buttonView.getText().toString();
+                              preco = preco.split(",|\\$")[1];
+                              int val = Integer.parseInt(preco.substring(1,preco.length()));
+                              valor -= val;
+                              updateTextViewValor();
                           }
                       }
                   }
@@ -91,7 +97,6 @@ public class CtrlMontar extends AppCompatActivity {
             }while(cursor.moveToNext());
         }
         cursor.close();
-
     }
 
     public void updateTextViewValor(){
