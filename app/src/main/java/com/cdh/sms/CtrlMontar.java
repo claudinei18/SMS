@@ -140,8 +140,6 @@ public class CtrlMontar extends AppCompatActivity {
                         ultimoPao = val;
                         valor += val;
                         updateTextViewValor();
-                        Toast toast = Toast.makeText(CtrlMontar.this, rdbtn.getText() + " selecionado!", Toast.LENGTH_SHORT);
-                        toast.show();
                     }
                 });
                 rg.addView(rdbtn);
@@ -187,8 +185,6 @@ public class CtrlMontar extends AppCompatActivity {
                         ultimaCarne = val;
                         valor += val;
                         updateTextViewValor();
-                        Toast toast = Toast.makeText(CtrlMontar.this, rdbtn.getText() + " selecionado!", Toast.LENGTH_SHORT);
-                        toast.show();
                     }
                 });
                 rg.addView(rdbtn);
