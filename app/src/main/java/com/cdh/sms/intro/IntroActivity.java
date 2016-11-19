@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cdh.sms.R;
+import com.cdh.sms.tools.SharedPreferencesHelper;
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -69,6 +70,7 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 launchHomeScreen();
+                new SharedPreferencesHelper(IntroActivity.this).setFirstAccess(false);
             }
         });
 
@@ -83,6 +85,7 @@ public class IntroActivity extends AppCompatActivity {
                     viewPager.setCurrentItem(current);
                 } else {
                     launchHomeScreen();
+                    new SharedPreferencesHelper(IntroActivity.this).setFirstAccess(false);
                 }
             }
         });

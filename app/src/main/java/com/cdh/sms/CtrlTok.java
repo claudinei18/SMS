@@ -2,14 +2,21 @@ package com.cdh.sms;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cdh.sms.dataBase.DatabaseOpenHelper;
 import com.cdh.sms.token.TknGenerator;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 public class CtrlTok extends AppCompatActivity {
 
@@ -28,17 +35,22 @@ public class CtrlTok extends AppCompatActivity {
 
         databaseOpenHelper.insertToken(token);
 
-        Cursor cursor = databaseOpenHelper.getToken();
-
-        if (cursor.moveToFirst()){
-            do {
-                String x = cursor.getString(cursor.getColumnIndex("token"));
-            }while(cursor.moveToNext());
-            cursor.close();
-        }
-
         TextView tv = (TextView)findViewById(R.id.tvToken);
         tv.setText(token);
+
+        createQRCode(token);
+    }
+
+    private void createQRCode(String token) {
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix = multiFormatWriter.encode(token, BarcodeFormat.QR_CODE,200,200);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            ((ImageView) findViewById(R.id.qrcode2)).setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
     }
 
     public void goTelaCentral(View view) {
@@ -50,16 +62,17 @@ public class CtrlTok extends AppCompatActivity {
         float valor = 0;
 
         try {
-            pedido = getIntent().getExtras().getString("pedido");
-            nomUsu = getIntent().getExtras().getString("nomUsu");
-            cpfUsu = getIntent().getExtras().getString("cpfUsu");
-            telUsu = getIntent().getExtras().getString("telUsu");
-            valor = getIntent().getExtras().getFloat("valor");
+            valor = getIntent().getFloatExtra("valor", 0f);
+
+            pedido = getIntent().getStringExtra("pedido");
+            nomUsu = getIntent().getStringExtra("nomUsu");
+            cpfUsu = getIntent().getStringExtra("cpfUsu");
+            telUsu = getIntent().getStringExtra("telUsu");
         }catch (Exception e){
 
         }
 
-        Log.i("CtrlTok", "Valor = " + valor);
+        Log.i("tok","valor: " + valor);
         databaseOpenHelper.insertPedido(cpfUsu, nomUsu, telUsu, pedido, valor, token);
 
         Intent intent = new Intent(this, CtrlCentral.class);

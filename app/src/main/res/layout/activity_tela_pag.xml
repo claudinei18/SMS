@@ -15,6 +15,7 @@
 
     <Button
         android:id="@+id/btn_ok"
+        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -27,6 +28,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="10dp"
+        android:background="@drawable/background2"
         android:layout_above="@+id/btn_ok"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true">
@@ -41,7 +44,7 @@
 
         <TextView
             android:id="@+id/tvDadosDoCliente"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -50,14 +53,14 @@
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/rl_et_Nome"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvDadosDoCliente"
             android:layout_margin="5dp">
 
             <EditText
                 android:id="@+id/et_Nome"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/textView4"
@@ -77,7 +80,7 @@
 
             <EditText
                 android:id="@+id/et_CPF"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/et_Nome"
@@ -89,7 +92,7 @@
 
         <TextView
             android:id="@+id/tvDadosDoCartao"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/rl_et_CPF"
@@ -107,7 +110,7 @@
 
             <EditText
                 android:id="@+id/et_NumeroCartao"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignEnd="@+id/btn_ok"
                 android:layout_alignParentStart="true"
@@ -128,7 +131,7 @@
 
             <EditText
                 android:id="@+id/et_CodSeg"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignEnd="@+id/textView5"
                 android:layout_alignParentStart="true"
@@ -149,7 +152,7 @@
 
             <EditText
                 android:id="@+id/et_NomeImpresso"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/et_NumeroCartao"
                 android:layout_alignEnd="@+id/et_NumeroCartao"
@@ -171,7 +174,7 @@
 
             <EditText
                 android:id="@+id/et_DataVal"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignEnd="@+id/textView4"
                 android:layout_alignParentStart="true"

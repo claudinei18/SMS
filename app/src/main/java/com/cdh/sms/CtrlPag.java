@@ -52,8 +52,9 @@ public class CtrlPag extends AppCompatActivity {
         float valor = 0;
 
         try {
-            pedido = getIntent().getExtras().get("pedido").toString();
-            valor = getIntent().getFloatExtra("valor", 0.0f);
+            pedido = getIntent().getStringExtra("pedido");
+            valor = getIntent().getFloatExtra("valor", valor);
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -65,7 +66,8 @@ public class CtrlPag extends AppCompatActivity {
         bundle.putString("cpfUsu", cpfUsu);
         bundle.putString("telUsu", telUsu);
 
-        Log.i("CtrlPag", "Valor = " + valor);
+        Log.i("pag","valor: " + valor);
+
         Intent intent = new Intent(this, CtrlTok.class);
         intent.putExtras(bundle);
         startActivity(intent);

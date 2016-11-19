@@ -2,13 +2,20 @@ package com.cdh.sms;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cdh.sms.dataBase.DatabaseOpenHelper;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 public class CtrlRecupToken extends AppCompatActivity {
 
@@ -20,7 +27,6 @@ public class CtrlRecupToken extends AppCompatActivity {
         setContentView(R.layout.activity_recup_token);
 
         databaseOpenHelper = new DatabaseOpenHelper(this);
-
 
         Cursor cursor = databaseOpenHelper.getToken();
 
@@ -39,28 +45,28 @@ public class CtrlRecupToken extends AppCompatActivity {
         if (cursor.moveToFirst()){
             do {
                 String pedido = cursor.getString(cursor.getColumnIndex("sanduiche"));
-                String nomeUsu = cursor.getString(cursor.getColumnIndex("nomeUsu"));
 
                 float valor = cursor.getFloat(cursor.getColumnIndex("valor"));
                 pedido += "\nValor: R$" + valor + "0";
-                System.out.println("Pedido: " + pedido);
-                System.out.println("Valor: " + valor);
-                TextView tv = (TextView) findViewById(R.id.tvPedidoDetalhe);
-                tv.setText(pedido);
+                ((TextView) findViewById(R.id.tvPedidoDetalhe)).setText(pedido);
+
             }while(cursor.moveToNext());
+
             cursor.close();
         }
 
+        createQRCode(token);
+    }
 
-        cursor = databaseOpenHelper.getValorPorToken(token);
-
-        if (cursor.moveToFirst()){
-            do {
-                float valor = cursor.getFloat(cursor.getColumnIndex("valor"));
-                Toast.makeText(CtrlRecupToken.this, ""+valor, Toast.LENGTH_SHORT).show();
-
-            }while(cursor.moveToNext());
-            cursor.close();
+    private void createQRCode(String token) {
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix = multiFormatWriter.encode(token, BarcodeFormat.QR_CODE,200,200);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            ((ImageView) findViewById(R.id.qrcode)).setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
         }
     }
 

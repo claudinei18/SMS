@@ -82,6 +82,12 @@ public class CtrlMontar extends AppCompatActivity {
                               int val = Integer.parseInt(preco.substring(1,preco.length()));
                               valor += val;
                               updateTextViewValor();
+                          } else {
+                              String preco = buttonView.getText().toString();
+                              preco = preco.split(",|\\$")[1];
+                              int val = Integer.parseInt(preco.substring(1,preco.length()));
+                              valor -= val;
+                              updateTextViewValor();
                           }
                       }
                   }
@@ -91,7 +97,6 @@ public class CtrlMontar extends AppCompatActivity {
             }while(cursor.moveToNext());
         }
         cursor.close();
-
     }
 
     public void updateTextViewValor(){
@@ -134,10 +139,7 @@ public class CtrlMontar extends AppCompatActivity {
                         valor -= ultimoPao;
                         ultimoPao = val;
                         valor += val;
-                        Toast.makeText(CtrlMontar.this, ""+v.getId(), Toast.LENGTH_SHORT).show();
                         updateTextViewValor();
-                        Toast toast = Toast.makeText(CtrlMontar.this, rdbtn.getText() + " selecionado!", Toast.LENGTH_SHORT);
-                        toast.show();
                     }
                 });
                 rg.addView(rdbtn);
@@ -182,10 +184,7 @@ public class CtrlMontar extends AppCompatActivity {
                         valor -= ultimaCarne;
                         ultimaCarne = val;
                         valor += val;
-                        Toast.makeText(CtrlMontar.this, ""+v.getId(), Toast.LENGTH_SHORT).show();
                         updateTextViewValor();
-                        Toast toast = Toast.makeText(CtrlMontar.this, rdbtn.getText() + " selecionado!", Toast.LENGTH_SHORT);
-                        toast.show();
                     }
                 });
                 rg.addView(rdbtn);
@@ -258,9 +257,15 @@ public class CtrlMontar extends AppCompatActivity {
 
 
         if(nextView) {
-            Intent intent = new Intent(CtrlMontar.this, CtrlDest.class);
+            Toast toast = Toast.makeText(CtrlMontar.this, "Selecionado: " + pedido, Toast.LENGTH_SHORT);
+            toast.show();
+
+            Intent intent = new Intent(this, CtrlDest.class);
+
             intent.putExtra("pedido", pedido);
             intent.putExtra("valor", valor);
+
+            Log.i("montar","valor: " + valor);
 
             startActivity(intent);
         }

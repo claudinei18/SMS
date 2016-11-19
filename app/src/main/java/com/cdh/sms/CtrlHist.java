@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.cdh.sms.dataBase.DatabaseOpenHelper;
 
@@ -17,6 +18,7 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
 
     DatabaseOpenHelper databaseOpenHelper;
     String sanduiche = "";
+    ArrayList<String> itens;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,31 +27,28 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
 
         databaseOpenHelper = new DatabaseOpenHelper(this);
 
-        ArrayList<String> itens = new ArrayList<>();
+        itens = new ArrayList<>();
 
         Cursor cursor = databaseOpenHelper.getPedidos();
 
         if (cursor.moveToFirst()){
             do{
-                String id = cursor.getString(cursor.getColumnIndex("_id"));
-                String nomeUsu = cursor.getString(cursor.getColumnIndex("nomeUsu"));
-                String cpfUsu = cursor.getString(cursor.getColumnIndex("cpfUsu"));
-                String telUsu = cursor.getString(cursor.getColumnIndex("telUsu"));
                 sanduiche = cursor.getString(cursor.getColumnIndex("sanduiche"));
 
-
                 itens.add(sanduiche);
-
 
             }while(cursor.moveToNext());
         }
         cursor.close();
 
+        if (itens.size() != 0) {
+            ((TextView)findViewById(R.id.txt_lv)).setVisibility(View.GONE);
+        }
+
         ListView listView = (ListView) findViewById(R.id.list_view);
         listView.setOnItemClickListener(this);
         ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, itens);
         listView.setAdapter(adapter);
-
     }
 
     public void nextDe(View view) {
@@ -59,7 +58,7 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this, CtrlDest.class);
-        intent.putExtra("pedido", sanduiche);
+        intent.putExtra("pedido", itens.get(position));
 
         startActivity(intent);
     }
