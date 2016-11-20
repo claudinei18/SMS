@@ -40,11 +40,21 @@ public class MyAdapter extends ArrayAdapter<Sanduiche> {
 
         Sanduiche sanduiche = getItem(position);
 
-
         if (sanduiche != null) {
-            TextView tt1 = (TextView) v.findViewById(R.id.id);
+            TextView tt3 = (TextView) v.findViewById(R.id.id);
             TextView tt2 = (TextView) v.findViewById(R.id.categoryId);
-            TextView tt3 = (TextView) v.findViewById(R.id.description);
+            TextView tt1 = (TextView) v.findViewById(R.id.description);
+            TextView tt_v = (TextView) v.findViewById(R.id.tt_valor);
+
+            tt_v.setText("Valor: R$ " + String.valueOf(sanduiche.getValor()));
+
+            tt1.setText("Pão: " + sanduiche.getPao());
+            tt2.setText("Carne: " + sanduiche.getCarne());
+            if (sanduiche.getResto() == null) {
+                tt3.setVisibility(View.GONE);
+            } else {
+                tt3.setText(sanduiche.getResto());
+            }
         }
 
         return v;

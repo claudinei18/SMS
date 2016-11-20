@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,6 +12,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cdh.sms.dataBase.DatabaseOpenHelper;
+import com.cdh.sms.model.Sanduiche;
+import com.cdh.sms.tools.MyAdapter;
 
 import java.util.ArrayList;
 
@@ -19,6 +22,7 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
     DatabaseOpenHelper databaseOpenHelper;
     String sanduiche = "";
     ArrayList<String> itens;
+    ArrayList<Sanduiche> sanduiches;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,7 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
         databaseOpenHelper = new DatabaseOpenHelper(this);
 
         itens = new ArrayList<>();
+        sanduiches = new ArrayList<Sanduiche>();
 
         Cursor cursor = databaseOpenHelper.getPedidos();
 
@@ -36,6 +41,9 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
                 sanduiche = cursor.getString(cursor.getColumnIndex("sanduiche"));
 
                 itens.add(sanduiche);
+
+                Log.i("CtrlHist", "Add sanduiche");
+                sanduiches.add(new Sanduiche(sanduiche));
 
             }while(cursor.moveToNext());
         }
@@ -47,8 +55,11 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
 
         ListView listView = (ListView) findViewById(R.id.list_view);
         listView.setOnItemClickListener(this);
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, itens);
+        Log.i("CtrlHist", "creating adapter");
+        ArrayAdapter<Sanduiche> adapter = new MyAdapter(this, android.R.layout.simple_list_item_1, sanduiches);
+        Log.i("CtrlHist", "created adapter");
         listView.setAdapter(adapter);
+        Log.i("CtrlHist", "Set adapter");
     }
 
     public void nextDe(View view) {
