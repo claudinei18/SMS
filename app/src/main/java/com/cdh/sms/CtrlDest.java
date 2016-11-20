@@ -52,6 +52,8 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
     private LatLng atual = null;
     private String meioDeLocomocao = "driving";
 
+    private boolean lojaSelecionada = false;
+    
     private GoogleMap mMap;
 
     @Override
@@ -114,6 +116,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                             longitudeLoja = marker.getPosition().longitude;
                             setTimePercurse(marker.getPosition());
                             marker.setTitle(getAddress(marker.getPosition()));
+                            lojaSelecionada = true;
                             return false;
                         }
                     });
@@ -251,25 +254,30 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
     }
 
     public void nextP(View view) {
+        if(lojaSelecionada) {
 
-        String pedido = "";
-        float valor = 0;
+            String pedido = "";
+            float valor = 0;
 
-        try {
-            pedido = getIntent().getStringExtra("pedido");
-            valor = getIntent().getFloatExtra("valor", valor);
+            try {
+                pedido = getIntent().getStringExtra("pedido");
+                valor = getIntent().getFloatExtra("valor", valor);
 
-        }catch (Exception e){
+            } catch (Exception e) {
 
+            }
+
+            Log.i("dest", "valor: " + valor);
+
+            Intent intent = new Intent(this, CtrlPag.class);
+            intent.putExtra("pedido", pedido);
+            intent.putExtra("valor", valor);
+            appLocationService.unregister();
+            startActivity(intent);
+        }else{
+            Toast toast = Toast.makeText(CtrlDest.this, "Selecione uma loja para retirar seu pedido clicando em um marker.", Toast.LENGTH_LONG);
+            toast.show();
         }
-
-        Log.i("dest","valor: " + valor);
-
-        Intent intent = new Intent(this, CtrlPag.class);
-        intent.putExtra("pedido", pedido);
-        intent.putExtra("valor", valor);
-        appLocationService.unregister();
-        startActivity(intent);
     }
 
 }

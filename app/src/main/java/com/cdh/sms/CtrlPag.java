@@ -7,7 +7,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.cdh.sms.dataBase.DatabaseOpenHelper;
@@ -19,6 +21,24 @@ public class CtrlPag extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_pag);
+
+        Spinner spinner = (Spinner) findViewById(R.id.month_spinner);
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.month_array, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+        Spinner spinner2 = (Spinner) findViewById(R.id.year_spinner);
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
+                R.array.year_array, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spinner2.setAdapter(adapter2);
 
         databaseOpenHelper = new DatabaseOpenHelper(this);
     }
@@ -42,8 +62,8 @@ public class CtrlPag extends AppCompatActivity {
         EditText etNomImp = (EditText)findViewById(R.id.et_NomeImpresso);
         String nomImp = etNomImp.getText().toString();
 
-        EditText etDatVal= (EditText)findViewById(R.id.et_DataVal);
-        String datVal = etDatVal.getText().toString();
+//        EditText etDatVal= (EditText)findViewById(R.id.et_DataVal);
+//        String datVal = etDatVal.getText().toString();
 
         EditText etTel = (EditText)findViewById(R.id.editText_Telefone);
         String telUsu = etTel.getText().toString();
