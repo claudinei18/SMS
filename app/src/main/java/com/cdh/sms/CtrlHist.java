@@ -2,6 +2,7 @@ package com.cdh.sms;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +18,7 @@ import com.cdh.sms.tools.MyAdapter;
 
 import java.util.ArrayList;
 
-public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
 
     DatabaseOpenHelper databaseOpenHelper;
     String sanduiche = "";
@@ -55,6 +56,7 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
 
         ListView listView = (ListView) findViewById(R.id.list_view);
         listView.setOnItemClickListener(this);
+        listView.setOnItemLongClickListener(this);
         Log.i("CtrlHist", "creating adapter");
         ArrayAdapter<Sanduiche> adapter = new MyAdapter(this, android.R.layout.simple_list_item_1, sanduiches);
         Log.i("CtrlHist", "created adapter");
@@ -72,5 +74,14 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
         intent.putExtra("pedido", itens.get(position));
 
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        new AlertDialog.Builder(this)
+                .setTitle("Detalhe do Sanduiche")
+                .setMessage(itens.get(position))
+                .show();
+        return true;
     }
 }
