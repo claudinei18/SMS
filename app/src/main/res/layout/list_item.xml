@@ -12,8 +12,9 @@
             android:id="@+id/id"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="id" android:textStyle="bold"
-            android:gravity="left"
+            android:text="id"
+            android:textStyle="bold"
+            android:gravity="center"
             android:layout_weight="1"
             android:typeface="monospace"
             android:height="40sp" />
