@@ -1,6 +1,8 @@
 package com.cdh.sms;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -47,8 +49,6 @@ public class CtrlPag extends AppCompatActivity {
 
         EditText etNome = (EditText)findViewById(R.id.et_Nome);
         String nomeUsu = etNome.getText().toString();
-        System.out.println("NomUsu: " + nomeUsu);
-        Log.i("nomeUsu",""+nomeUsu);
 
         EditText etCPF = (EditText)findViewById(R.id.et_CPF);
         String cpfUsu = etCPF.getText().toString();
@@ -78,18 +78,52 @@ public class CtrlPag extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+        if(nomeUsu.length() < 3){
+            etNome.setError("Nome deve conter pelo menos 3 dígitos");
+        }else if(cpfUsu.length() < 11){
+            etCPF.requestFocus();
+            etCPF.setError("CPF deve ter 11 dígitos");
+        }else if(numCar.length() < 16){
+            etNumCart.requestFocus();
+            etNumCart.setError("Número do cartão deve ter 16 dígitos");
+        }else if(codSeg.length() < 3){
+            etCodSeg.requestFocus();
+            etCodSeg.setError("Código de Segurança deve ter 3 dígitos");
+        }else if(nomImp.length() < 3){
+            etNomImp.requestFocus();
+            etNomImp.setError("Nome deve conter pelo menos 3 dígitos");
+        }else if(telUsu.length() < 8){
+            etTel.requestFocus();
+            etTel.setError("Telefone pelo menos 8 digítos");
+        }else{
+            final Bundle bundle = new Bundle();
+            bundle.putFloat("valor", valor);
+            bundle.putString("pedido", pedido);
+            bundle.putString("nomeUsu", nomeUsu);
+            bundle.putString("cpfUsu", cpfUsu);
+            bundle.putString("telUsu", telUsu);
 
-        Bundle bundle = new Bundle();
-        bundle.putFloat("valor", valor);
-        bundle.putString("pedido", pedido);
-        bundle.putString("nomeUsu", nomeUsu);
-        bundle.putString("cpfUsu", cpfUsu);
-        bundle.putString("telUsu", telUsu);
+            Log.i("pag","valor: " + valor);
 
-        Log.i("pag","valor: " + valor);
+            final ProgressDialog progressBar = new ProgressDialog(this);
+            progressBar.setCancelable(true);
+            progressBar.setMessage("Aguardando pagamento ...");
+            progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressBar.setProgress(0);
+            progressBar.setMax(100);
 
-        Intent intent = new Intent(this, CtrlTok.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
+            progressBar.show();
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    progressBar.hide();
+                    Intent intent = new Intent(CtrlPag.this, CtrlTok.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            }, 2000);
+        }
     }
 }

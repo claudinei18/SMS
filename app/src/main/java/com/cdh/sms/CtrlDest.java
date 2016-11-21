@@ -106,12 +106,12 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
 
                     teste = new LatLng(x, y);
-                    mMap.addMarker(new MarkerOptions().position(teste).title("Loja: " + nome).snippet("Esta é uma loja !!!"));
+                    mMap.addMarker(new MarkerOptions().position(teste).title("Loja: " + nome).snippet(nome));
                     mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
                         public boolean onMarkerClick(Marker marker) {
                             TextView tvLoja = (TextView)findViewById(R.id.tvLoja);
-                            tvLoja.setText(marker.getTitle());
+                            tvLoja.setText(marker.getSnippet());
                             latitudeLoja = marker.getPosition().latitude;
                             longitudeLoja = marker.getPosition().longitude;
                             setTimePercurse(marker.getPosition());
@@ -199,7 +199,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                         }
 
                         Toast.makeText(getApplicationContext(), tempo[0], Toast.LENGTH_SHORT).show();
-                        System.out.println("ERRO: " + response.toString());
+                        System.out.println(response.toString());
                     }
                 },
                 new Response.ErrorListener()

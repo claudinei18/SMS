@@ -276,25 +276,57 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             + NOME + ", "
             + LATITUDE + ", "
             + LONGITUDE + ") " +
-            "VALUES ('casa_tia_lena', -19.895171, -44.026986);";
+            "VALUES ('PUC Minas', -19.923639, -43.992525);";
 
     final private static String INSERT_LOCATION2 = "INSERT INTO locations ("
             + NOME + ", "
             + LATITUDE + ", "
             + LONGITUDE + ") " +
-            "VALUES ('PUC Minas', -19.923639, -43.992525);";
+            "VALUES ('Shopping Cidade', -19.9214789, -43.9422547);";
 
     final private static String INSERT_LOCATION3 = "INSERT INTO locations ("
             + NOME + ", "
             + LATITUDE + ", "
             + LONGITUDE + ") " +
-            "VALUES ('Mineirão', -19.866020, -43.971040);";
+            "VALUES ('Shopping Diamond', -19.928042, -43.9495611);";
 
     final private static String INSERT_LOCATION4 = "INSERT INTO locations ("
             + NOME + ", "
             + LATITUDE + ", "
             + LONGITUDE + ") " +
-            "VALUES ('Casa tia Lena', -19.797104, -43.970881);";
+            "VALUES ('Shopping Boulevard', -19.9206769, -43.9223167);";
+
+    final private static String INSERT_LOCATION5 = "INSERT INTO locations ("
+            + NOME + ", "
+            + LATITUDE + ", "
+            + LONGITUDE + ") " +
+            "VALUES ('Shopping Del Rey', -19.8900929, -43.9701877);";
+
+    final private static String INSERT_LOCATION6 = "INSERT INTO locations ("
+            + NOME + ", "
+            + LATITUDE + ", "
+            + LONGITUDE + ") " +
+            "VALUES ('BH Shopping', -19.9742494, -43.9464427);";
+
+    final private static String INSERT_LOCATION7 = "INSERT INTO locations ("
+            + NOME + ", "
+            + LATITUDE + ", "
+            + LONGITUDE + ") " +
+            "VALUES ('Minas Shopping', -19.8745823, -43.9276472);";
+
+    final private static String INSERT_LOCATION8 = "INSERT INTO locations ("
+            + NOME + ", "
+            + LATITUDE + ", "
+            + LONGITUDE + ") " +
+            "VALUES ('Shopping Contagem', -19.8804709, -44.0404807);";
+
+    final private static String INSERT_LOCATION9 = "INSERT INTO locations ("
+            + NOME + ", "
+            + LATITUDE + ", "
+            + LONGITUDE + ") " +
+            "VALUES ('Shopping Estação', -19.8217207, -43.9488471);";
+
+
     /*=============================================================================*/
 
     /*=============================================================================*/
@@ -408,6 +440,11 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         db.execSQL(INSERT_LOCATION2);
         db.execSQL(INSERT_LOCATION3);
         db.execSQL(INSERT_LOCATION4);
+        db.execSQL(INSERT_LOCATION5);
+        db.execSQL(INSERT_LOCATION6);
+        db.execSQL(INSERT_LOCATION7);
+        db.execSQL(INSERT_LOCATION8);
+        db.execSQL(INSERT_LOCATION9);
 
         /*TOKEN*/
         db.execSQL(CREATE_TABLE_TOKEN);

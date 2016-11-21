@@ -144,6 +144,7 @@
 
     <TextView
         android:text="Valor R$"
+        android:textSize="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -153,11 +154,12 @@
         android:id="@+id/textView6" />
 
     <TextView
+        android:textSize="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/textView6"
-        android:text="valor"
+        android:text="0"
         android:layout_marginBottom="10dp"
         android:id="@+id/tvValor" />
 
