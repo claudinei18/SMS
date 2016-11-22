@@ -2,7 +2,7 @@
     <string name="app_name">SMS</string>
 
     <!--tela inicial-->
-    <string name="telaInicial_Sanduiche">Sanduiche</string>
+    <string name="telaInicial_Sanduiche">Estou com fome!</string>
     <string name="telaInicial_VerToken">Ver Token</string>
 
     <!--tela token-->
@@ -24,4 +24,60 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_ctrl_recup_token">CtrlRecupToken</string>
+
+    <string name="distance_matrix_api_key">AIzaSyCFkDm18czij6N4A8Z3bFbNmul-EU_yJvA</string>
+
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">Olá Faminto!</string>
+    <string name="slide_1_desc">A maneira mais fácil de encomendar comida do seu restaurante favorito!</string>
+
+    <string name="slide_2_title">Rápido</string>
+    <string name="slide_2_desc">Encomende seu sanduíche de maneira rápida e fácil!</string>
+
+    <string name="slide_3_title">Melhores descontos</string>
+    <string name="slide_3_desc">Melhores descontos em todos os serviços que oferecemos!</string>
+
+    <string name="slide_4_title">Em qualquer lugar</string>
+    <string name="slide_4_desc">Você decide onde irá retirar seu pedido!</string>
+
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
+
+    <string-array name="month_array">
+        <item>Mês</item>
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>0</item>
+        <item>09</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+
+    <string-array name="year_array">
+        <item>Ano</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>maior</item>
+    </string-array>
+
 </resources>

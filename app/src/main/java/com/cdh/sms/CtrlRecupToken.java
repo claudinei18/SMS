@@ -5,38 +5,55 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cdh.sms.dataBase.DatabaseOpenHelper;
-import com.cdh.sms.token.TknGenerator;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
-public class CtrlTok extends AppCompatActivity {
+public class CtrlRecupToken extends AppCompatActivity {
 
     DatabaseOpenHelper databaseOpenHelper;
-    String token = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tela_tok);
+        setContentView(R.layout.activity_recup_token);
 
         databaseOpenHelper = new DatabaseOpenHelper(this);
 
-        TknGenerator tknGenerator = new TknGenerator();
-        token = tknGenerator.makeToken();
+        Cursor cursor = databaseOpenHelper.getToken();
 
-        databaseOpenHelper.insertToken(token);
+        String token = "";
+        if (cursor.moveToFirst()){
+            do {
+                token = cursor.getString(cursor.getColumnIndex("token"));
+                TextView tv = (TextView) findViewById(R.id.tvRecToken);
+                tv.setText(token);
+            }while(cursor.moveToNext());
+            cursor.close();
+        }
 
-        TextView tv = (TextView)findViewById(R.id.tvToken);
-        tv.setText(token);
+        cursor = databaseOpenHelper.getPedidoPorToken(token);
+
+        if (cursor.moveToFirst()){
+            do {
+                String pedido = cursor.getString(cursor.getColumnIndex("sanduiche"));
+
+                float valor = cursor.getFloat(cursor.getColumnIndex("valor"));
+                pedido += "\nValor: R$" + valor + "0";
+                ((TextView) findViewById(R.id.tvPedidoDetalhe)).setText(pedido);
+
+            }while(cursor.moveToNext());
+
+            cursor.close();
+        }
 
         createQRCode(token);
     }
@@ -47,36 +64,15 @@ public class CtrlTok extends AppCompatActivity {
             BitMatrix bitMatrix = multiFormatWriter.encode(token, BarcodeFormat.QR_CODE,200,200);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-            ((ImageView) findViewById(R.id.qrcode2)).setImageBitmap(bitmap);
+            ((ImageView) findViewById(R.id.qrcode)).setImageBitmap(bitmap);
         } catch (WriterException e) {
             e.printStackTrace();
         }
     }
 
     public void goTelaCentral(View view) {
-
-        String pedido = "";
-        String nomUsu = "";
-        String cpfUsu = "";
-        String telUsu = "";
-        float valor = 0;
-
-        try {
-            valor = getIntent().getFloatExtra("valor", 0f);
-
-            pedido = getIntent().getStringExtra("pedido");
-            nomUsu = getIntent().getStringExtra("nomUsu");
-            cpfUsu = getIntent().getStringExtra("cpfUsu");
-            telUsu = getIntent().getStringExtra("telUsu");
-        }catch (Exception e){
-
-        }
-
-        databaseOpenHelper.insertPedido(cpfUsu, nomUsu, telUsu, pedido, valor, token);
-
         Intent intent = new Intent(this, CtrlCentral.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-
         startActivity(intent);
         finish();
     }

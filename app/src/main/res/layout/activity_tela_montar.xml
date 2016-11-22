@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackGround">
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_tela_montar"
@@ -11,20 +19,149 @@
     tools:context="com.cdh.sms.CtrlMontar">
 
     <Button
-        android:text="@string/telaMont_ok"
+        android:id="@+id/btn_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/btn_ok"
-        android:onClick="nextD"/>
+        android:onClick="nextD"
+        android:textColor="#fff"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/okbutton"
+        android:text="@string/telaMont_ok" />
 
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
         android:layout_above="@+id/btn_ok"
-        android:id="@+id/frame_fragment">
+        android:padding="10dp"
+        android:background="@drawable/background2"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
-    </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#9b9b9b"/>
+
+            <TextView
+                android:id="@+id/tvPaes"
+                android:layout_width="81dp"
+                android:layout_height="wrap_content"
+                android:text="Pão"
+                android:textSize="20sp" />
+
+            <RadioGroup
+                android:id="@+id/rg_Paes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#9b9b9b"/>
+
+            <TextView
+                android:id="@+id/tvCarnes"
+                android:layout_width="81dp"
+                android:layout_height="wrap_content"
+                android:text="Carnes"
+                android:textSize="20sp" />
+
+            <RadioGroup
+                android:id="@+id/rg_Carnes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#9b9b9b"/>
+
+            <TextView
+                android:id="@+id/tvSaladas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Saladas"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/llSaladas"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#9b9b9b"/>
+
+            <TextView
+                android:id="@+id/tvMolhos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Molhos"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/llMolhos"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#9b9b9b"/>
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Condimentos"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/llCondimentos"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:text="Valor R$"
+        android:textSize="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/textView6" />
+
+    <TextView
+        android:textSize="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/textView6"
+        android:text="0"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/tvValor" />
+
 </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
