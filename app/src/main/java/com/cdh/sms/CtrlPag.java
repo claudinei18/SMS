@@ -103,7 +103,6 @@ public class CtrlPag extends AppCompatActivity {
             bundle.putString("cpfUsu", cpfUsu);
             bundle.putString("telUsu", telUsu);
 
-            Log.i("pag","valor: " + valor);
 
             final ProgressDialog progressBar = new ProgressDialog(this);
             progressBar.setCancelable(true);

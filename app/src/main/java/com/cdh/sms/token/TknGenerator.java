@@ -25,10 +25,4 @@ public class TknGenerator {
 		
 		return token;
 	}
-
-	
-//	public static void main (String[] args) {
-//			String token = TknGenerator.makeToken();
-//			System.out.println(token);
-//	}
 }

@@ -265,8 +265,6 @@ public class CtrlMontar extends AppCompatActivity {
             intent.putExtra("pedido", pedido);
             intent.putExtra("valor", valor);
 
-            Log.i("montar","valor: " + valor);
-
             startActivity(intent);
         }
     }

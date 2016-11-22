@@ -72,7 +72,6 @@ public class CtrlTok extends AppCompatActivity {
 
         }
 
-        Log.i("tok","valor: " + valor);
         databaseOpenHelper.insertPedido(cpfUsu, nomUsu, telUsu, pedido, valor, token);
 
         Intent intent = new Intent(this, CtrlCentral.class);

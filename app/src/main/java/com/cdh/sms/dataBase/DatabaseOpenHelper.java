@@ -61,7 +61,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             + NOME_CARNE + ", "
             + CALORIAS_CARNE + ", "
             + PRECO + ") " +
-            "VALUES ('Presunto', '67.2', '12');";
+            "VALUES ('Presunto', '67.2', '2');";
     /*=============================================================================*/
 
 
@@ -88,12 +88,12 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             + NOME_QUEIJO + ", "
             + CALORIAS_QUEIJO + ", "
             + PRECO + ") " +
-            "VALUES ('muçarela', '47', '3');";
+            "VALUES ('muçarela', '47', '2');";
     final private static String INSERT_QUEIJO3 = "INSERT INTO queijo ("
             + NOME_QUEIJO + ", "
             + CALORIAS_QUEIJO + ", "
             + PRECO + ") " +
-            "VALUES ('ricota', '54', '4');";
+            "VALUES ('ricota', '54', '3');";
     /*=============================================================================*/
 
     /*=============================================================================*/
@@ -113,27 +113,27 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             + NOME_PAO + ", "
             + CALORIAS_PAO + ", "
             + PRECO + ") " +
-            "VALUES ('Francês', '135', '3');";
+            "VALUES ('Francês', '135', '1');";
     final private static String INSERT_PAO2 = "INSERT INTO PAO ("
             + NOME_PAO + ", "
             + CALORIAS_PAO + ", "
             + PRECO + ") " +
-            "VALUES ('Integral', '261', '4');";
+            "VALUES ('Integral', '261', '3');";
     final private static String INSERT_PAO3 = "INSERT INTO PAO ("
             + NOME_PAO + ", "
             + CALORIAS_PAO + ", "
             + PRECO + ") " +
-            "VALUES ('Sírio', '147', '5');";
+            "VALUES ('Sírio', '147', '3');";
     final private static String INSERT_PAO4 = "INSERT INTO PAO ("
             + NOME_PAO + ", "
             + CALORIAS_PAO + ", "
             + PRECO + ") " +
-            "VALUES ('Pão de Queijo', '68', '6');";
+            "VALUES ('Pão de Queijo', '68', '2');";
     final private static String INSERT_PAO5 = "INSERT INTO PAO ("
             + NOME_PAO + ", "
             + CALORIAS_PAO + ", "
             + PRECO + ") " +
-            "VALUES ('Australiano', '140', '7');";
+            "VALUES ('Australiano', '140', '4');";
     /*=============================================================================*/
 
     /*=============================================================================*/
@@ -158,22 +158,22 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             + NOME_SALADA + ", "
             + CALORIAS_SALADA + ", "
             + PRECO + ") " +
-            "VALUES ('Tomate', '20', '2');";
+            "VALUES ('Tomate', '20', '1');";
     final private static String INSERT_SALADA3 = "INSERT INTO SALADA ("
             + NOME_SALADA + ", "
             + CALORIAS_SALADA + ", "
             + PRECO + ") " +
-            "VALUES ('Pimentão', '14', '3');";
+            "VALUES ('Pimentão', '14', '1');";
     final private static String INSERT_SALADA4 = "INSERT INTO SALADA ("
             + NOME_SALADA + ", "
             + CALORIAS_SALADA + ", "
             + PRECO + ") " +
-            "VALUES ('Cebola', '31', '4');";
+            "VALUES ('Cebola', '31', '1');";
     final private static String INSERT_SALADA5 = "INSERT INTO SALADA ("
             + NOME_SALADA + ", "
             + CALORIAS_SALADA + ", "
             + PRECO + ") " +
-            "VALUES ('Azeitona', '6', '5');";
+            "VALUES ('Azeitona', '6', '1');";
     /*=============================================================================*/
 
     /*=============================================================================*/
@@ -198,32 +198,32 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             + NOME_MOLHO + ", "
             + CALORIAS_MOLHO + ", "
             + PRECO + ") " +
-            "VALUES ('Barbercue', '100', '2');";
+            "VALUES ('Barbercue', '100', '1');";
     final private static String INSERT_MOLHO3 = "INSERT INTO MOLHO ("
             + NOME_MOLHO + ", "
             + CALORIAS_MOLHO + ", "
             + PRECO + ") " +
-            "VALUES ('Parmesão', '150', '3');";
+            "VALUES ('Parmesão', '150', '1');";
     final private static String INSERT_MOLHO4 = "INSERT INTO MOLHO ("
             + NOME_MOLHO + ", "
             + CALORIAS_MOLHO + ", "
             + PRECO + ") " +
-            "VALUES ('Maionese', '199', '4');";
+            "VALUES ('Maionese', '199', '1');";
     final private static String INSERT_MOLHO5 = "INSERT INTO MOLHO ("
             + NOME_MOLHO + ", "
             + CALORIAS_MOLHO + ", "
             + PRECO + ") " +
-            "VALUES ('Mostarda', '9', '5');";
+            "VALUES ('Mostarda', '9', '1');";
     final private static String INSERT_MOLHO6 = "INSERT INTO MOLHO ("
             + NOME_MOLHO + ", "
             + CALORIAS_MOLHO + ", "
             + PRECO + ") " +
-            "VALUES ('Ketchup', '5', '6');";
+            "VALUES ('Ketchup', '5', '1');";
     final private static String INSERT_MOLHO7 = "INSERT INTO MOLHO ("
             + NOME_MOLHO + ", "
             + CALORIAS_MOLHO + ", "
             + PRECO + ") " +
-            "VALUES ('Azeite', '4', '7');";
+            "VALUES ('Azeite', '4', '1');";
     /*=============================================================================*/
 
     /*=============================================================================*/
@@ -248,17 +248,17 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
             + NOME_CONDIMENTOS + ", "
             + CALORIAS_CONDIMENTOS + ", "
             + PRECO + ") " +
-            "VALUES ('Pimenta Calabresa', '2', '2');";
+            "VALUES ('Pimenta Calabresa', '2', '1');";
     final private static String INSERT_CONDIMENTOS3 = "INSERT INTO CONDIMENTOS ("
             + NOME_CONDIMENTOS + ", "
             + CALORIAS_CONDIMENTOS + ", "
             + PRECO + ") " +
-            "VALUES ('Pimenta do Reino', '3', '3');";
+            "VALUES ('Pimenta do Reino', '3', '1');";
     final private static String INSERT_CONDIMENTOS4 = "INSERT INTO CONDIMENTOS ("
             + NOME_CONDIMENTOS + ", "
             + CALORIAS_CONDIMENTOS + ", "
             + PRECO + ") " +
-            "VALUES ('Sal', '4', '4');";
+            "VALUES ('Sal', '4', '1');";
     /*=============================================================================*/
 
 

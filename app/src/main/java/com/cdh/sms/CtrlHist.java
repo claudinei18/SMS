@@ -43,7 +43,6 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
 
                 itens.add(sanduiche);
 
-                Log.i("CtrlHist", "Add sanduiche");
                 sanduiches.add(new Sanduiche(sanduiche));
 
             }while(cursor.moveToNext());
@@ -57,11 +56,11 @@ public class CtrlHist extends AppCompatActivity implements AdapterView.OnItemCli
         ListView listView = (ListView) findViewById(R.id.list_view);
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);
-        Log.i("CtrlHist", "creating adapter");
+
         ArrayAdapter<Sanduiche> adapter = new MyAdapter(this, android.R.layout.simple_list_item_1, sanduiches);
-        Log.i("CtrlHist", "created adapter");
+
         listView.setAdapter(adapter);
-        Log.i("CtrlHist", "Set adapter");
+
     }
 
     public void nextDe(View view) {

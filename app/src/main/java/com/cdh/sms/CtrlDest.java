@@ -53,7 +53,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
     private String meioDeLocomocao = "driving";
 
     private boolean lojaSelecionada = false;
-    
+
     private GoogleMap mMap;
 
     @Override
@@ -61,9 +61,8 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_dest);
 
-        Log.i("Dest:", "Pedido: " +getIntent().getStringExtra("pedido"));
 
-        RelativeLayout item = (RelativeLayout)findViewById(R.id.rl_map);
+        RelativeLayout item = (RelativeLayout) findViewById(R.id.rl_map);
         View child = getLayoutInflater().inflate(R.layout.activity_maps, null);
         item.addView(child);
 
@@ -93,8 +92,8 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
             LatLng teste = null;
             atual = new LatLng(gpsLocation.getLatitude(), gpsLocation.getLongitude());
 
-            if (cursor.moveToFirst()){
-                do{
+            if (cursor.moveToFirst()) {
+                do {
                     String nome = cursor.getString(cursor.getColumnIndex("nome"));
                     String lat = cursor.getString(cursor.getColumnIndex("latitude"));
                     String longi = cursor.getString(cursor.getColumnIndex("longitude"));
@@ -110,7 +109,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                     mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
                         public boolean onMarkerClick(Marker marker) {
-                            TextView tvLoja = (TextView)findViewById(R.id.tvLoja);
+                            TextView tvLoja = (TextView) findViewById(R.id.tvLoja);
                             tvLoja.setText(marker.getSnippet());
                             latitudeLoja = marker.getPosition().latitude;
                             longitudeLoja = marker.getPosition().longitude;
@@ -121,11 +120,11 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                         }
                     });
 
-                }while(cursor.moveToNext());
+                } while (cursor.moveToNext());
             }
             cursor.close();
 
-            RadioButton rbCar = (RadioButton)findViewById(R.id.rb_Carro);
+            RadioButton rbCar = (RadioButton) findViewById(R.id.rb_Carro);
             rbCar.setChecked(true);
 
             atual = new LatLng(gpsLocation.getLatitude(), gpsLocation.getLongitude());
@@ -146,32 +145,32 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
     }
 
-    public String getAddress(LatLng markerPosition){
+    public String getAddress(LatLng markerPosition) {
         String enderecoMarker = "";
         Geocoder geocoderMarker;
         List<Address> address = new ArrayList<Address>();
 
-            try {
-                geocoderMarker = new Geocoder(this, Locale.getDefault());
-                address.add(geocoderMarker.getFromLocation(markerPosition.latitude, markerPosition.longitude, 1).get(0));
+        try {
+            geocoderMarker = new Geocoder(this, Locale.getDefault());
+            address.add(geocoderMarker.getFromLocation(markerPosition.latitude, markerPosition.longitude, 1).get(0));
 
-                enderecoMarker = address.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            enderecoMarker = address.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
 
-                return enderecoMarker;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            return enderecoMarker;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return "";
     }
 
-    public void setTimePercurse(LatLng loja){
+    public void setTimePercurse(LatLng loja) {
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
 
-        String url ="https://maps.googleapis.com/maps/api/distancematrix/json?origins="+ atual.latitude + "," + atual.longitude+ "|" +
+        String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + atual.latitude + "," + atual.longitude + "|" +
                 "&destinations=" + loja.latitude + "," + loja.longitude + "&mode=" + meioDeLocomocao + "&language=pt-BR&key=AIzaSyCFkDm18czij6N4A8Z3bFbNmul-EU_yJvA";
 
 
@@ -181,16 +180,14 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
         JSONObject jsonObj = new JSONObject(params);
 
-        final TextView tvTempo = (TextView)findViewById(R.id.tvTempo);
+        final TextView tvTempo = (TextView) findViewById(R.id.tvTempo);
         final String[] tempo = new String[1];
 
         // Request a json response from the provided URL
         JsonObjectRequest jsonObjRequest = new JsonObjectRequest
-                (Request.Method.GET, url, jsonObj, new Response.Listener<JSONObject>()
-                {
+                (Request.Method.GET, url, jsonObj, new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject response)
-                    {
+                    public void onResponse(JSONObject response) {
                         try {
                             tempo[0] = response.getJSONArray("rows").getJSONObject(0).getJSONArray("elements").getJSONObject(0).getJSONObject("duration").getString("text");
                             tvTempo.setText(tempo[0]);
@@ -199,24 +196,20 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
                         }
 
                         Toast.makeText(getApplicationContext(), tempo[0], Toast.LENGTH_SHORT).show();
-                        System.out.println(response.toString());
                     }
                 },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
-                        System.out.println("ERRO: " + error.toString());
-                    }
-                });
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                                System.out.println("ERRO: " + error.toString());
+                            }
+                        });
 
         // Add the request to the RequestQueue.
         queue.add(jsonObjRequest);
 
     }
-
 
 
     public void onRadioButtonClicked(View view) {
@@ -254,7 +247,7 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
     }
 
     public void nextP(View view) {
-        if(lojaSelecionada) {
+        if (lojaSelecionada) {
 
             String pedido = "";
             float valor = 0;
@@ -267,14 +260,12 @@ public class CtrlDest extends AppCompatActivity implements OnMapReadyCallback {
 
             }
 
-            Log.i("dest", "valor: " + valor);
-
             Intent intent = new Intent(this, CtrlPag.class);
             intent.putExtra("pedido", pedido);
             intent.putExtra("valor", valor);
             appLocationService.unregister();
             startActivity(intent);
-        }else{
+        } else {
             Toast toast = Toast.makeText(CtrlDest.this, "Selecione uma loja para retirar seu pedido clicando em um marker.", Toast.LENGTH_LONG);
             toast.show();
         }
